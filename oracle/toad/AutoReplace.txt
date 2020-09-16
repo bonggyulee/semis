@@ -1,0 +1,105 @@
+﻿comit=commit
+decl=declare
+elseif=elsif
+endif=end if
+endloop=end loop
+except=exception
+exitwhen=exit when
+form=from
+func=function
+fuo=for update of
+lop=loop
+ndf=NO_DATA_FOUND
+nil=null
+nul=null
+pack=package
+proc=procedure
+rae=RAISE_APPLICATION_ERROR
+returns=return
+seelct=select
+sqlc=sqlcode
+sqle=sqlerrm
+teh=the
+tmr=TOO_MANY_ROWS
+wco=where current of
+whenothers=when others
+whil=while
+tcmsagg=tbco_cms_wd_agree_m
+TCMSAGG=tbco_cms_wd_agree_m
+tmm=TBMT_MEMBER_M
+TMM=TBMT_MEMBER_M
+sel=select * from
+SEL=select * from
+wer=where 
+WER=where 
+srno=srb_edycno
+srno1=srb_edycno = ''
+SRNO=srb_edycno
+SRNO1=srb_edycno = ''
+mmno=mber_sno
+mmno1=mber_sno = ''
+MMNO=mber_sno
+MMNO1=mber_sno = ''
+pno=PAYER_NO
+pno2=PAYER_NO = ''
+PNO=PAYER_NO
+PNO1=PAYER_NO = ''
+lno=lnd_sno
+lno1=lnd_sno = ''
+LNO=lnd_sno
+LNO1=lnd_sno = ''
+seld=select  from dual
+SELD=select  from dual
+@@공통=공통
+@log=AS OF TIMESTAMP(SYSTIMESTAMP - INTERVAL '5' MINUTE)
+@배치=TBCO_BATCH_RESULT
+@배치조회=SELECT * FROM USER_TABLES WHERE TABLE_NAME LIKE 'QRTZ_%'
+@배치종료=UPDATE QRTZ_TRIGGERS SET TRIGGER_STATE = 'PAUSED' WHERE TRIGGER_NAME=''
+@암호=damo.hash_str_data('1')
+@이자=TRUNC(DDC_SALARY_INT_CALTIN(MBER_SNO, SRB_EDYCNO, INTR_APL_YMD,'Y'))
+@기관회원=TBMT_INSTMEMBER_M		-- [공제]기관회원관리
+@기관담당자=TBMT_INSTCHARGER_M_DAMO	-- [공제]기관담당자관리
+@회원계정=TBMT_MEMBERACCOUNT_M	-- [공제]회원계정관리
+@회원=TBMT_MEMBER_M	-- [공제]회원관리
+@기관협약=TBMT_INSTAGREEMENT_I --[공제]기관협약정보
+@파일=TBCO_ATTACHFILE_M   -- [공통]첨부파일관리
+@@홈=홈페이지
+@홈신청=TBMT_INDVCHGAPPLY_M	-- [공제]개별가입자변경신청관리
+@홈증감좌=TBMT_INDVINCRSSDECRSAPPLY_M	-- [공제]개별가입자증좌감좌신청관리
+@홈휴직=TBMT_INDVLAYOFFAPPLY_M	-- [공제]개별가입자휴직신청관리
+@홈승계=TBMT_INDVSUCCESSIONAPPLY_M	-- [공제]적립형급여승계신청관리
+@홈미납=TBMT_INDVNOPAIDAPPLY_M	-- [공제]개별가입자미납신청관리
+@홈지급=TBMT_INDVPAYMENTAPPLY_M	-- [공제]개별가입자지급신청관리
+@홈해지=TBMT_ACCMTTRMNATAPPLY_M	-- [공제]적립형급여해지신청관리
+@홈연금변경=TBMT_INDVANNTYPAYCHG_M  -- [공제]개별가입자연금지급변경신청관리 
+@@적립형공제부분=적립형공제
+@계약=TBMT_ACCMTCONTRACT_M	-- [공제]적립형급여계약관리
+@증감좌=TBMT_ACCMTINCRSSDECRS_M	-- [공제]적립형급여증감좌관리
+@휴직=TBMT_ACCMTLAYOFFREINSAT_M	-- [공제]적립형급여휴직복직관리
+@승계=TBMT_ACCMTSUCCESSION_M	-- [공제]적립형급여승계관리
+@전입=TBMT_ACCMTTRNSFRNMOVE_M	-- [공제]적립형급여전입전출관리
+@해지=TBMT_ACCMTTRMNATAPPLY_M	-- [공제]적립형급여해지신청관리
+@미납=TBMT_ACCMTNONPAID_M	-- [공제]적립형급여미납관리
+@재납입=TBMT_ACCMTREPAID_M	-- [공제]적립형급여재납입관리
+@납입=TBMT_ACCMTPAID_M	-- [공제]적립형급여납입관리
+@휴직납입=TBMT_ACCMTLAYOFFPAID_M	-- [공제]적립형급여휴직납입관리
+@지급=TBMT_ACCMTPAYMENT_M	-- [공제]적립형급여지급관리
+@연금지급=TBMT_ACCMTANNTYPAYMENT_M	-- [공제]적립형급여연금지급관리
+@마감=TBMT_ACCMTPAIDCLOSE_M	-- [공제]수납마감관리
+@마감상세=TBMT_ACCMTPAIDCLOSEDETAIL_M	-- [공제]수납마감세부내역
+@요청정보=TBMT_JOBRQSINFO_M	    -- [공제]업무요청정보관리
+@요청처리=TBMT_JOBRQSPRG_M    -- [공제]업무요청처리관리
+@요청파일=TBMT_JOBRQSATCHFILE_M    -- [공제]업무요청첨부파일관리
+@업무파일=TBMT_ACCMTJOBFILE_M -- [공제]업무별첨부파일관리
+@@회계부분=거래
+@가계정=TBFI_SUSACNTAMT_M	-- [회계]가계정금액관리
+@수납=TBMT_ACCMTRCPPAY_M	-- [공제]적립수납회계매핑정보
+@회계입출금=TBFI_RCPPAY_M_DAMO    -- [회계]입출금관리
+@가수금=TBMT_SUSPENSERECEIPT_M	-- [공제]가수금관리
+@입출금=TBMT_PAIDPAYMENT_M	-- [공제]입출금관리
+@가상거래=WCMS_ERP_VIRA05 A  --[WINCMS]가상계좌거래내역 
+@가상수납=WCMS_ERP_VIRA01 --[WINCMS]가상계좌수납정보등록
+@@수정=수정
+@암호수정=UPDATE TBMT_MEMBERACCOUNT_M SET MBER_PASSWD = DAMO.HASH_STR_DATA('1') WHERE MBER_SNO = ''
+@기관암호수정=UPDATE TBMT_INSTCHARGER_M_DAMO SET CHRG_PASSWD = DAMO.HASH_STR_DATA('1') WHERE INST_CD = ''
+@메일수정=UPDATE TBMT_MEMBER_M SET EMAIL_ADDR = 'bong82@sema.or.kr' WHERE MBER_SNO = ''

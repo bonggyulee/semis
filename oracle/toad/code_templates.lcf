@@ -1,0 +1,4848 @@
+object FSynt: TSyntAnalyzer
+  Formats = <
+    item
+      DisplayName = 'Default'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+      FormatType = ftCustomFont
+    end
+    item
+      DisplayName = 'Identifier'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Reserved word'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+      ChangeCase = ccUpper
+    end
+    item
+      DisplayName = 'String'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Comment'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGreen
+      Font.Height = -13
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = []
+      FormatType = ftCustomFont
+    end
+    item
+      DisplayName = 'Symbol'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Number'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Marked block'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clHighlightText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+      BgColor = clHighlight
+      FormatType = ftColor
+    end
+    item
+      DisplayName = 'Reserved PL/SQL word'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'SQL Functions'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'SQL*Plus Meta Commands'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Predefined Exceptions'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Default Oracle Packages'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Public Package Procedure'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = [fsBold]
+    end
+    item
+      DisplayName = 'Function separator'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+      BgColor = clRed
+      FormatType = ftBackGround
+    end
+    item
+      DisplayName = 'Current block'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = [fsBold]
+      BgColor = clBtnFace
+      FormatType = ftColor
+      BorderTypeLeft = blDot
+      BorderColorLeft = clMaroon
+      BorderTypeTop = blDot
+      BorderColorTop = clMaroon
+      BorderTypeRight = blDot
+      BorderColorRight = clMaroon
+      BorderTypeBottom = blDot
+      BorderColorBottom = clMaroon
+    end
+    item
+      DisplayName = 'Current function'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clMaroon
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+      BgColor = 16777205
+      FormatType = ftBackGround
+      MultiLineBorder = True
+    end
+    item
+      DisplayName = 'Current Line'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+      BgColor = 13369080
+      FormatType = ftBackGround
+    end
+    item
+      DisplayName = '()'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = [fsBold, fsUnderline]
+      BgColor = clBtnFace
+      BorderTypeLeft = blDot
+      BorderTypeTop = blDot
+      BorderTypeRight = blDot
+      BorderTypeBottom = blDot
+    end
+    item
+      DisplayName = 'Big Bold (tree)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = [fsBold]
+      FormatType = ftCustomFont
+    end
+    item
+      DisplayName = 'Group (tree)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clPurple
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = [fsBold, fsItalic]
+    end
+    item
+      DisplayName = 'Function (tree)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = [fsBold]
+    end
+    item
+      DisplayName = 'Toad_Datatypes'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Toad_UserTables'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clOlive
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Toad_UserViews'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clOlive
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Toad_UserProcs'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clOlive
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end
+    item
+      DisplayName = 'Toad_SYSViews'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clOlive
+      Font.Height = -13
+      Font.Name = 'Courier'
+      Font.Style = []
+    end>
+  TokenRules = <
+    item
+      DisplayName = 'Comment'
+      StyleName = 'Comment'
+      TokenType = 1
+      Expression = '(?s)(/\*.*?(\*/|\Z))|(?-s)(--.*)|(REM\s.*)'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'String Q-Quote'
+      StyleName = 'String'
+      TokenType = 4
+      Expression = 
+        '(?s)(q'#39')((<.*?)(>'#39'|\Z)|(\(.*?)(\)'#39'|\Z)|({.*?)(}'#39'|\Z)|(\[.*?)(\]'#39 +
+        '|\Z))'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'String Q-Quote Catchall'
+      StyleName = 'String'
+      TokenType = 4
+      Expression = '(?s)(q'#39')((.).*?(\3'#39'|\Z))'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'String'
+      StyleName = 'String'
+      TokenType = 4
+      Expression = '(?s)('#39'|")(.*?)(\1|\Z)'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Float'
+      StyleName = 'Number'
+      TokenType = 6
+      Expression = '\d+\.?\d+e[\+\-]?\d+|\d+\.\d+'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Integer'
+      StyleName = 'Number'
+      TokenType = 5
+      Expression = '\d+'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Public Package Procedure'
+      StyleName = 'Public Package Procedure'
+      TokenType = 2
+      Expression = 'DBMS_\w+?\.\w+'#13#10
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Any name'
+      StyleName = 'Identifier'
+      TokenType = 2
+      Expression = '(?r)[\w$\#]+'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end
+    item
+      DisplayName = 'Symbol'
+      StyleName = 'Symbol'
+      TokenType = 3
+      Expression = '[/,\.;:\(\)=<>\+\-\|]'
+      ColumnFrom = 0
+      ColumnTo = 0
+    end>
+  BlockRules = <
+    item
+      DisplayName = 'Keywords'
+      StyleName = 'Reserved word'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '@'
+            '@@'
+            'A'
+            'ABORT'
+            'ABS'
+            'ACC'
+            'ACCEPT'
+            'ACCESS'
+            'ACCESS_INTO_NULL'
+            'ACCESSED'
+            'ACCOUNT'
+            'ACOS'
+            'ACTIVATE'
+            'ADD'
+            'ADD_MONTHS'
+            'ADMIN'
+            'ADMINISTER'
+            'ADMINISTRATOR'
+            'ADVISE'
+            'ADVISOR'
+            'AFTER'
+            'ALGORITHM'
+            'ALIAS'
+            'ALL'
+            'ALL_ROWS'
+            'ALLOCATE'
+            'ALLOW'
+            'ALTER'
+            'ALWAYS'
+            'ANALYZE'
+            'ANCILLARY'
+            'AND'
+            'AND_EQUAL'
+            'ANTIJOIN'
+            'ANY'
+            'ANYSCHEMA'
+            'APPEND'
+            'APPLY'
+            'ARCHIVE'
+            'ARCHIVELOG'
+            'ARRAY'
+            'ARRAYLEN'
+            'AS'
+            'ASC'
+            'ASCII'
+            'ASIN'
+            'ASSOCIATE'
+            'AT'
+            'ATAN'
+            'ATAN2'
+            'ATTRIBUTE'
+            'ATTRIBUTES'
+            'AUDIT'
+            'AUTHENTICATED'
+            'AUTHENTICATION'
+            'AUTHID'
+            'AUTHORIZATION'
+            'AUTO'
+            'AUTOALLOCATE'
+            'AUTOEXTEND'
+            'AUTOMATIC'
+            'AVAILABILITY'
+            'AVG'
+            'BACKUP'
+            'BASE_TABLE'
+            'BASICFILE'
+            'BATCH'
+            'BECOME'
+            'BEFORE'
+            'BEGIN'
+            'BEGIN_OUTLINE_DATA'
+            'BEHALF'
+            'BETWEEN'
+            'BFILE'
+            'BFILENAME'
+            'BIGFILE'
+            'BINARY'
+            'BINARY_DOUBLE'
+            'BINARY_DOUBLE_INFINITY'
+            'BINARY_DOUBLE_NAN'
+            'BINARY_FLOAT'
+            'BINARY_FLOAT_INFINITY'
+            'BINARY_FLOAT_NAN'
+            'BINARY_INTEGER'
+            'BINDING'
+            'BITAND'
+            'BITMAP'
+            'BITMAP_TREE'
+            'BITMAPS'
+            'BITS'
+            'BLOB'
+            'BLOCK'
+            'BLOCK_RANGE'
+            'BLOCKS'
+            'BLOCKSIZE'
+            'BODY'
+            'BOOLEAN'
+            'BOTH'
+            'BOUND'
+            'BREAK'
+            'BROADCAST'
+            'BTITLE'
+            'BUFFER'
+            'BUFFER_CACHE'
+            'BUFFER_POOL'
+            'BUILD'
+            'BULK'
+            'BY'
+            'BYPASS_RECURSIVE_CHECK'
+            'BYPASS_UJVC'
+            'BYTE'
+            'CACHE'
+            'CACHE_CB'
+            'CACHE_INSTANCES'
+            'CACHE_TEMP_TABLE'
+            'CALL'
+            'CANCEL'
+            'CARDINALITY'
+            'CASCADE'
+            'CASE'
+            'CAST'
+            'CATEGORY'
+            'CEIL'
+            'CELL_FLASH_CACHE'
+            'CERTIFICATE'
+            'CFILE'
+            'CHAINED'
+            'CHANGE'
+            'CHAR'
+            'CHAR_BASE'
+            'CHAR_CS'
+            'CHARACTER'
+            'CHARTOROWID'
+            'CHECK'
+            'CHECKPOINT'
+            'CHILD'
+            'CHOOSE'
+            'CHR'
+            'CHUNK'
+            'CIV_GB'
+            'CLASS'
+            'CLEAR'
+            'CLOB'
+            'CLONE'
+            'CLOSE'
+            'CLOSE_CACHED_OPEN_CURSORS'
+            'CLUSTER'
+            'CLUSTERING_FACTOR'
+            'CLUSTERS'
+            'COALESCE'
+            'COARSE'
+            'COLLECT'
+            'COLLECTION_IS_NULL'
+            'COLUMN'
+            'COLUMN_STATS'
+            'COLUMN_VALUE'
+            'COLUMNS'
+            'COMMENT'
+            'COMMIT'
+            'COMMITTED'
+            'COMPACT'
+            'COMPATIBILITY'
+            'COMPILE'
+            'COMPLETE'
+            'COMPOSITE_LIMIT'
+            'COMPRESS'
+            'COMPUTE'
+            'CONCAT'
+            'CONFORMING'
+            'CONNECT'
+            'CONNECT_BY_COST_BASED'
+            'CONNECT_BY_FILTERING'
+            'CONNECT_BY_ISCYCLE'
+            'CONNECT_BY_ISLEAF'
+            'CONNECT_BY_ROOT'
+            'CONNECT_TIME'
+            'CONSIDER'
+            'CONSISTENT'
+            'CONSTANT'
+            'CONSTRAINT'
+            'CONSTRAINTS'
+            'CONTAINER'
+            'CONTENT'
+            'CONTENTS'
+            'CONTEXT'
+            'CONTINUE'
+            'CONTROLFILE'
+            'CONVERT'
+            'COPY'
+            'CORR_K'
+            'CORR_S'
+            'CORRUPTION'
+            'COS'
+            'COSH'
+            'COST'
+            'COUNT'
+            'CPU_COSTING'
+            'CPU_PER_CALL'
+            'CPU_PER_SESSION'
+            'CRASH'
+            'CREATE'
+            'CREATE_STORED_OUTLINES'
+            'CROSS'
+            'CROSSEDITION'
+            'CUBE'
+            'CUBE_GB'
+            'CURRENT'
+            'CURRENT_DATE'
+            'CURRENT_SCHEMA'
+            'CURRENT_TIME'
+            'CURRENT_TIMESTAMP'
+            'CURRENT_USER'
+            'CURRVAL'
+            'CURSOR'
+            'CURSOR_ALREADY_OPEN'
+            'CURSOR_SHARING_EXACT'
+            'CURSOR_SPECIFIC_SEGMENT'
+            'CV'
+            'CYCLE'
+            'DANGLING'
+            'DATA'
+            'DATABASE'
+            'DATAFILE'
+            'DATAFILES'
+            'DATAOBJNO'
+            'DATE'
+            'DATE_MODE'
+            'DAY'
+            'DB_ROLE_CHANGE'
+            'DBA'
+            'DBA_RECYCLEBIN'
+            'DBMS_STATS'
+            'DBTIMEZONE'
+            'DDL'
+            'DEALLOCATE'
+            'DEBUG'
+            'DEBUGOFF'
+            'DEBUGON'
+            'DEC'
+            'DECIMAL'
+            'DECLARE'
+            'DECODE'
+            'DECREMENT'
+            'DECRYPT'
+            'DEDUPLICATE'
+            'DEF'
+            'DEFAULT'
+            'DEFERRABLE'
+            'DEFERRED'
+            'DEFINE'
+            'DEFINE_EDITOR'
+            'DEFINED'
+            'DEFINER'
+            'DEFINITION'
+            'DEGREE'
+            'DEL'
+            'DELAY'
+            'DELETE'
+            'DELETING'
+            'DELTA'
+            'DEMAND'
+            'DENSE_RANK'
+            'DEQUEUE'
+            'DEREF'
+            'DEREF_NO_REWRITE'
+            'DESC'
+            'DESCRIBE'
+            'DETACHED'
+            'DETERMINES'
+            'DICTIONARY'
+            'DIGITS'
+            'DIMENSION'
+            'DIRECT_LOAD'
+            'DIRECTORY'
+            'DISABLE'
+            'DISABLE_RPKE'
+            'DISALLOW'
+            'DISASSOCIATE'
+            'DISCONNECT'
+            'DISK'
+            'DISKGROUP'
+            'DISKS'
+            'DISMOUNT'
+            'DISPATCHERS'
+            'DISTINCT'
+            'DISTINGUISHED'
+            'DISTRIBUTED'
+            'DML'
+            'DML_UPDATE'
+            'DO'
+            'DOCUMENT'
+            'DOMAIN_INDEX_NO_SORT'
+            'DOMAIN_INDEX_SORT'
+            'DOUBLE'
+            'DOWNGRADE'
+            'DRIVING_SITE'
+            'DROP'
+            'DUMP'
+            'DUP_VAL_ON_INDEX'
+            'DYNAMIC'
+            'DYNAMIC_SAMPLING'
+            'DYNAMIC_SAMPLING_EST_CDN'
+            'E'
+            'EACH'
+            'EDIT'
+            'EDITION'
+            'EDITIONING'
+            'EDITIONS'
+            'ELEMENT'
+            'ELIMINATE_JOIN'
+            'ELIMINATE_OBY'
+            'ELIMINATE_OUTER_JOIN'
+            'ELSE'
+            'ELSIF'
+            'EMPTY'
+            'EMPTY_BLOB'
+            'EMPTY_CLOB'
+            'ENABLE'
+            'ENCRYPT'
+            'ENCRYPTED'
+            'ENCRYPTION'
+            'END'
+            'END_OUTLINE_DATA'
+            'ENFORCE'
+            'ENFORCED'
+            'ENQUEUE'
+            'ENTERPRISE'
+            'ENTRY'
+            'ERROR'
+            'ERROR_ON_OVERLAP_TIME'
+            'ERRORS'
+            'ESCAPE'
+            'ESTIMATE'
+            'EVALNAME'
+            'EVALUATION'
+            'EVENTS'
+            'EXCEPT'
+            'EXCEPTION'
+            'EXCEPTION_INIT'
+            'EXCEPTIONS'
+            'EXCHANGE'
+            'EXCLUDING'
+            'EXCLUSIVE'
+            'EXEC'
+            'EXECUTE'
+            'EXEMPT'
+            'EXISTS'
+            'EXIT'
+            'EXP'
+            'EXPAND_GSET_TO_UNION'
+            'EXPIRE'
+            'EXPLAIN'
+            'EXPLOSION'
+            'EXPORT'
+            'EXPR_CORR_CHECK'
+            'EXTEND'
+            'EXTENDS'
+            'EXTENT'
+            'EXTENTS'
+            'EXTERNAL'
+            'EXTERNALLY'
+            'EXTRACT'
+            'FACT'
+            'FAILED'
+            'FAILED_LOGIN_ATTEMPTS'
+            'FAILGROUP'
+            'FALSE'
+            'FAST'
+            'FBTSCAN'
+            'FETCH'
+            'FIC_CIV'
+            'FIC_PIV'
+            'FILE'
+            'FILESYSTEM_LIKE_LOGGING'
+            'FILTER'
+            'FINAL'
+            'FINE'
+            'FINISH'
+            'FIRST'
+            'FIRST_ROWS'
+            'FLAGGER'
+            'FLASH_CACHE'
+            'FLASHBACK'
+            'FLOAT'
+            'FLOB'
+            'FLOOR'
+            'FLUSH'
+            'FOLLOWING'
+            'FOR'
+            'FORALL'
+            'FORCE'
+            'FORCE_XML_QUERY_REWRITE'
+            'FOREIGN'
+            'FORM'
+            'FORTRAN'
+            'FORWARD'
+            'FOUND'
+            'FREELIST'
+            'FREELISTS'
+            'FREEPOOLS'
+            'FRESH'
+            'FROM'
+            'FULL'
+            'FUNCTION'
+            'FUNCTIONS'
+            'G'
+            'GATHER_PLAN_STATISTICS'
+            'GBY_CONC_ROLLUP'
+            'GENERATED'
+            'GENERIC'
+            'GET'
+            'GLOBAL'
+            'GLOBAL_NAME'
+            'GLOBAL_TOPIC_ENABLED'
+            'GLOBALLY'
+            'GO'
+            'GOTO'
+            'GRANT'
+            'GREATEST'
+            'GROUP'
+            'GROUP_BY'
+            'GROUPING'
+            'GROUPS'
+            'GUARANTEE'
+            'GUARANTEED'
+            'GUARD'
+            'HASH'
+            'HASH_AJ'
+            'HASH_SJ'
+            'HASHKEYS'
+            'HAVING'
+            'HEADER'
+            'HEAP'
+            'HELP'
+            'HEXTORAW'
+            'HIERARCHY'
+            'HIGH'
+            'HINTSET_BEGIN'
+            'HINTSET_END'
+            'HOST'
+            'HOUR'
+            'HWM_BROKERED'
+            'ID'
+            'IDENTIFIED'
+            'IDENTIFIER'
+            'IDENTITY'
+            'IDGENERATORS'
+            'IDLE_TIME'
+            'IF'
+            'IGNORE'
+            'IGNORE NAV'
+            'IGNORE_OPTIM_EMBEDDED_HINTS'
+            'IGNORE_WHERE_CLAUSE'
+            'IMMEDIATE'
+            'IMPORT'
+            'IN'
+            'IN_MEMORY_METADATA'
+            'INCLUDE_VERSION'
+            'INCLUDING'
+            'INCREMENT'
+            'INCREMENTAL'
+            'INDEX'
+            'INDEX_ASC'
+            'INDEX_COMBINE'
+            'INDEX_DESC'
+            'INDEX_FFS'
+            'INDEX_FILTER'
+            'INDEX_JOIN'
+            'INDEX_ROWS'
+            'INDEX_RRS'
+            'INDEX_SCAN'
+            'INDEX_SKIP_SCAN'
+            'INDEX_SS'
+            'INDEX_SS_ASC'
+            'INDEX_SS_DESC'
+            'INDEX_STATS'
+            'INDEXED'
+            'INDEXES'
+            'INDEXTYPE'
+            'INDEXTYPES'
+            'INDICATOR'
+            'INFINITE'
+            'INFORMATIONAL'
+            'INITCAP'
+            'INITIAL'
+            'INITIALIZED'
+            'INITIALLY'
+            'INITRANS'
+            'INLINE'
+            'INLINE_XMLTYPE_NT'
+            'INNER'
+            'INPUT'
+            'INSERT'
+            'INSERTING'
+            'INSTANCE'
+            'INSTANCES'
+            'INSTANTIABLE'
+            'INSTANTLY'
+            'INSTEAD'
+            'INSTR'
+            'INSTRB'
+            'INT'
+            'INTEGER'
+            'INTEGRITY'
+            'INTERFACE'
+            'INTERMEDIATE'
+            'INTERNAL_CONVERT'
+            'INTERNAL_USE'
+            'INTERPRETED'
+            'INTERSECT'
+            'INTERVAL'
+            'INTO'
+            'INVALID_CURSOR'
+            'INVALID_NUMBER'
+            'INVALIDATE'
+            'INVISIBLE'
+            'IS'
+            'IS A SET'
+            'IS ANY'
+            'IS EMPTY'
+            'IS PRESENT'
+            'ISOLATION'
+            'ISOLATION_LEVEL'
+            'ITERATE'
+            'ITERATION_NUMBER'
+            'JAVA'
+            'JOB'
+            'JOIN'
+            'K'
+            'KEEP'
+            'KEEP_DUPLICATES'
+            'KERBEROS'
+            'KEY'
+            'KEY_LENGTH'
+            'KEYFILE'
+            'KEYS'
+            'KEYSIZE'
+            'KILL'
+            'LABEL'
+            'LANGUAGE'
+            'LAST'
+            'LAST_DAY'
+            'LATERAL'
+            'LAYER'
+            'LDAP_REG_SYNC_INTERVAL'
+            'LDAP_REGISTRATION'
+            'LDAP_REGISTRATION_ENABLED'
+            'LEADING'
+            'LEAST'
+            'LEFT'
+            'LENGTH'
+            'LENGTHB'
+            'LESS'
+            'LEVEL'
+            'LEVELS'
+            'LIBRARY'
+            'LIKE'
+            'LIKE_EXPAND'
+            'LIKE2'
+            'LIKE4'
+            'LIKEC'
+            'LIMIT'
+            'LIMITED'
+            'LINK'
+            'LIST'
+            'LISTS'
+            'LN'
+            'LOB'
+            'LOCAL'
+            'LOCAL_INDEXES'
+            'LOCALTIME'
+            'LOCALTIMESTAMP'
+            'LOCATION'
+            'LOCATOR'
+            'LOCK'
+            'LOCKED'
+            'LOG'
+            'LOGFILE'
+            'LOGGING'
+            'LOGICAL'
+            'LOGICAL_READS_PER_CALL'
+            'LOGICAL_READS_PER_SESSION'
+            'LOGIN_DENIED'
+            'LOGOFF'
+            'LOGON'
+            'LONG'
+            'LOOP'
+            'LOWER'
+            'LPAD'
+            'LTRIM'
+            'M'
+            'MAIN'
+            'MAKE_REF'
+            'MANAGE'
+            'MANAGED'
+            'MANAGEMENT'
+            'MANUAL'
+            'MAPPING'
+            'MASTER'
+            'MATCHED'
+            'MATERIALIZE'
+            'MATERIALIZED'
+            'MAX'
+            'MAXARCHLOGS'
+            'MAXDATAFILES'
+            'MAXEXTENTS'
+            'MAXIMIZE'
+            'MAXINSTANCES'
+            'MAXLOGFILES'
+            'MAXLOGHISTORY'
+            'MAXLOGMEMBERS'
+            'MAXSIZE'
+            'MAXTRANS'
+            'MAXVALUE'
+            'MEASURES'
+            'MEDIAN'
+            'MEDIUM'
+            'MEMBER'
+            'MEMORY'
+            'MERGE'
+            'MERGE_AJ'
+            'MERGE_CONST_ON'
+            'MERGE_SJ'
+            'METHOD'
+            'MIGRATE'
+            'MIN'
+            'MINEXTENTS'
+            'MINIMIZE'
+            'MINIMUM'
+            'MINUS'
+            'MINUS_NULL'
+            'MINUTE'
+            'MINVALUE'
+            'MIRROR'
+            'MLSLABEL'
+            'MOD'
+            'MODE'
+            'MODEL'
+            'MODEL_COMPILE_SUBQUERY'
+            'MODEL_DONTVERIFY_UNIQUENESS'
+            'MODEL_DYNAMIC_SUBQUERY'
+            'MODEL_MIN_ANALYSIS'
+            'MODEL_NO_ANALYSIS'
+            'MODEL_PBY'
+            'MODEL_PUSH_REF'
+            'MODIFY'
+            'MONITORING'
+            'MONTH'
+            'MONTHS_BETWEEN'
+            'MOUNT'
+            'MOVE'
+            'MOVEMENT'
+            'MTS_DISPATCHERS'
+            'MULTISET'
+            'MV_MERGE'
+            'NAME'
+            'NAMED'
+            'NAN'
+            'NANVL'
+            'NATIONAL'
+            'NATIVE'
+            'NATURAL'
+            'NATURALN'
+            'NAV'
+            'NCHAR'
+            'NCHAR_CS'
+            'NCLOB'
+            'NEEDED'
+            'NESTED'
+            'NESTED_TABLE_FAST_INSERT'
+            'NESTED_TABLE_GET_REFS'
+            'NESTED_TABLE_ID'
+            'NESTED_TABLE_SET_REFS'
+            'NESTED_TABLE_SET_SETID'
+            'NETWORK'
+            'NEVER'
+            'NEW'
+            'NEW_TIME'
+            'NEXT'
+            'NEXT_DAY'
+            'NEXTVAL'
+            'NL_AJ'
+            'NL_SJ'
+            'NLS_CALENDAR'
+            'NLS_CHARACTERSET'
+            'NLS_CHARSET_DECL_LEN'
+            'NLS_CHARSET_ID'
+            'NLS_CHARSET_NAME'
+            'NLS_COMP'
+            'NLS_CURRENCY'
+            'NLS_DATE_FORMAT'
+            'NLS_DATE_LANGUAGE'
+            'NLS_INITCAP'
+            'NLS_ISO_CURRENCY'
+            'NLS_LANG'
+            'NLS_LANGUAGE'
+            'NLS_LENGTH_SEMANTICS'
+            'NLS_LOWER'
+            'NLS_NCHAR_CONV_EXCP'
+            'NLS_NUMERIC_CHARACTERS'
+            'NLS_SORT'
+            'NLS_SPECIAL_CHARS'
+            'NLS_TERRITORY'
+            'NLS_UPPER'
+            'NLSSORT'
+            'NO'
+            'NO_ACCESS'
+            'NO_BASETABLE_MULTIMV_REWRITE'
+            'NO_BUFFER'
+            'NO_CARTESIAN'
+            'NO_CONNECT_BY_COST_BASED'
+            'NO_CONNECT_BY_FILTERING'
+            'NO_CPU_COSTING'
+            'NO_DATA_FOUND'
+            'NO_ELIMINATE_JOIN'
+            'NO_ELIMINATE_OBY'
+            'NO_ELIMINATE_OUTER_JOIN'
+            'NO_EXPAND'
+            'NO_EXPAND_GSET_TO_UNION'
+            'NO_FACT'
+            'NO_FILTERING'
+            'NO_INDEX'
+            'NO_INDEX_FFS'
+            'NO_INDEX_SS'
+            'NO_MERGE'
+            'NO_MODEL_PUSH_REF'
+            'NO_MONITORING'
+            'NO_MULTIMV_REWRITE'
+            'NO_ORDER_ROLLUPS'
+            'NO_PARALLEL'
+            'NO_PARALLEL_INDEX'
+            'NO_PARTIAL_COMMIT'
+            'NO_PRUNE_GSETS'
+            'NO_PULL_PRED'
+            'NO_PUSH_PRED'
+            'NO_PUSH_SUBQ'
+            'NO_PX_JOIN_FILTER'
+            'NO_QKN_BUFF'
+            'NO_QUERY_TRANSFORMATION'
+            'NO_REF_CASCADE'
+            'NO_REWRITE'
+            'NO_SEMIJOIN'
+            'NO_SET_TO_JOIN'
+            'NO_SQL_TUNE'
+            'NO_STAR_TRANSFORMATION'
+            'NO_STATS_GSETS'
+            'NO_SWAP_JOIN_INPUTS'
+            'NO_TEMP_TABLE'
+            'NO_UNNEST'
+            'NO_USE_HASH'
+            'NO_USE_HASH_AGGREGATION'
+            'NO_USE_MERGE'
+            'NO_USE_NL'
+            'NO_XML_QUERY_REWRITE'
+            'NOAPPEND'
+            'NOARCHIVELOG'
+            'NOAUDIT'
+            'NOCACHE'
+            'NOCOMPRESS'
+            'NOCOPY'
+            'NOCPU_COSTING'
+            'NOCYCLE'
+            'NODELAY'
+            'NOFORCE'
+            'NOGUARANTEE'
+            'NOLOGGING'
+            'NOMAPPING'
+            'NOMAXVALUE'
+            'NOMINIMIZE'
+            'NOMINVALUE'
+            'NOMONITORING'
+            'NOMOUNT'
+            'NONE'
+            'NONSCHEMA'
+            'NOORDER'
+            'NOOVERRIDE'
+            'NOPARALLEL'
+            'NOPARALLEL_INDEX'
+            'NORELY'
+            'NOREPAIR'
+            'NORESETLOGS'
+            'NOREVERSE'
+            'NOREWRITE'
+            'NORMAL'
+            'NOROWDEPENDENCIES'
+            'NOSEGMENT'
+            'NOSORT'
+            'NOSTRICT'
+            'NOSTRIPE'
+            'NOSWITCH'
+            'NOT'
+            'NOT_LOGGED_ON'
+            'NOTFOUND'
+            'NOTHING'
+            'NOTIFICATION'
+            'NOVALIDATE'
+            'NOWAIT'
+            'NULL'
+            'NULLIF'
+            'NULLS'
+            'NUMBER'
+            'NUMBER_BASE'
+            'NUMERIC'
+            'NVARCHAR'
+            'NVARCHAR2'
+            'NVL'
+            'OBJECT'
+            'OBJNO'
+            'OBJNO_REUSE'
+            'OCIROWID'
+            'OF'
+            'OFF'
+            'OFFLINE'
+            'OID'
+            'OIDINDEX'
+            'OLD'
+            'OLD_PUSH_PRED'
+            'ON'
+            'ONLINE'
+            'ONLY'
+            'OPAQUE'
+            'OPAQUE_TRANSFORM'
+            'OPAQUE_XCANONICAL'
+            'OPCODE'
+            'OPEN'
+            'OPERATIONS'
+            'OPERATOR'
+            'OPT_ESTIMATE'
+            'OPT_PARAM'
+            'OPTIMAL'
+            'OPTIMIZER_FEATURES_ENABLE'
+            'OPTIMIZER_GOAL'
+            'OPTION'
+            'OR'
+            'OR_EXPAND'
+            'ORA_HASH'
+            'ORA_ROWSCN'
+            'ORDER'
+            'ORDERED'
+            'ORDERED_PREDICATES'
+            'ORDINALITY'
+            'ORGANIZATION'
+            'OSERROR'
+            'OTHERS'
+            'OUT'
+            'OUT_OF_LINE'
+            'OUTER'
+            'OUTLINE'
+            'OUTLINE_LEAF'
+            'OVER'
+            'OVERFLOW'
+            'OVERFLOW_NOMOVE'
+            'OVERLAPS'
+            'OWN'
+            'P'
+            'PACKAGE'
+            'PACKAGES'
+            'PARALLEL'
+            'PARALLEL_INDEX'
+            'PARAMETERS'
+            'PARENT'
+            'PARITY'
+            'PARTIALLY'
+            'PARTITION'
+            'PARTITION_HASH'
+            'PARTITION_LIST'
+            'PARTITION_RANGE'
+            'PARTITIONS'
+            'PASSING'
+            'PASSWORD'
+            'PASSWORD_GRACE_TIME'
+            'PASSWORD_LIFE_TIME'
+            'PASSWORD_LOCK_TIME'
+            'PASSWORD_REUSE_MAX'
+            'PASSWORD_REUSE_TIME'
+            'PASSWORD_VERIFY_FUNCTION'
+            'PATH'
+            'PATHS'
+            'PAUSE'
+            'PCTFREE'
+            'PCTINCREASE'
+            'PCTTHRESHOLD'
+            'PCTUSED'
+            'PCTVERSION'
+            'PERCENT'
+            'PERFORMANCE'
+            'PERMANENT'
+            'PFILE'
+            'PHYSICAL'
+            'PIV_GB'
+            'PIV_SSF'
+            'PLAN'
+            'PLI'
+            'PLS_INTEGER'
+            'PLSQL_CCFLAGS'
+            'PLSQL_CODE_TYPE'
+            'PLSQL_DEBUG'
+            'PLSQL_OPTIMIZE_LEVEL'
+            'PLSQL_WARNINGS'
+            'POINT'
+            'POLICY'
+            'POSITIVE'
+            'POSITIVEN'
+            'POST_TRANSACTION'
+            'POWER'
+            'POWERMULTISET'
+            'POWERMULTISET_BY_CARDINALITY'
+            'PQ_DISTRIBUTE'
+            'PQ_MAP'
+            'PQ_NOMAP'
+            'PRAGMA'
+            'PREBUILT'
+            'PRECEDING'
+            'PRECISION'
+            'PRECOMPUTE_SUBQUERY'
+            'PREPARE'
+            'PRESENT'
+            'PRESENTNNV'
+            'PRESENTV'
+            'PRESERVE'
+            'PRESERVE_OID'
+            'PREVIOUS'
+            'PRIMARY'
+            'PRINT'
+            'PRIOR'
+            'PRIVATE'
+            'PRIVATE_SGA'
+            'PRIVILEGE'
+            'PRIVILEGES'
+            'PROCEDURE'
+            'PROFILE'
+            'PROGRAM'
+            'PROGRAM_ERROR'
+            'PROJECT'
+            'PROMPT'
+            'PROTECTED'
+            'PROTECTION'
+            'PUBLIC'
+            'PULL_PRED'
+            'PURGE'
+            'PUSH_PRED'
+            'PUSH_SUBQ'
+            'PX_GRANULE'
+            'PX_JOIN_FILTER'
+            'QB_NAME'
+            'QUERY'
+            'QUERY_BLOCK'
+            'QUEUE'
+            'QUEUE_CURR'
+            'QUEUE_ROWP'
+            'QUIESCE'
+            'QUOTA'
+            'RAISE'
+            'RAISE_APPLICATION_ERROR'
+            'RANDOM'
+            'RANGE'
+            'RAPIDLY'
+            'RAW'
+            'RAWTOHEX'
+            'RBA'
+            'RBO_OUTLINE'
+            'READ'
+            'READS'
+            'REAL'
+            'REBALANCE'
+            'REBUILD'
+            'RECORD'
+            'RECORDS_PER_BLOCK'
+            'RECOVER'
+            'RECOVERABLE'
+            'RECOVERY'
+            'RECYCLE'
+            'RECYCLEBIN'
+            'REDUCED'
+            'REDUNDANCY'
+            'REF'
+            'REF_CASCADE_CURSOR'
+            'REFERENCE'
+            'REFERENCED'
+            'REFERENCES'
+            'REFERENCING'
+            'REFRESH'
+            'REFTOHEX'
+            'REGEXP_INSTR'
+            'REGEXP_LIKE'
+            'REGEXP_REPLACE'
+            'REGEXP_SUBSTR'
+            'REGISTER'
+            'REJECT'
+            'REKEY'
+            'RELATIONAL'
+            'release'
+            'RELY'
+            'rem'
+            'REMAINDER'
+            'REMARK'
+            'REMOTE_MAPPED'
+            'RENAME'
+            'REPAIR'
+            'REPLACE'
+            'REQUIRED'
+            'RESET'
+            'RESETLOGS'
+            'RESIZE'
+            'RESOLVE'
+            'RESOLVER'
+            'RESOURCE'
+            'RESTORE'
+            'RESTORE_AS_INTERVALS'
+            'RESTRICT'
+            'RESTRICT_ALL_REF_CONS'
+            'RESTRICT_REFERENCES'
+            'RESTRICTED'
+            'RESULT_CACHE'
+            'RESUMABLE'
+            'RESUME'
+            'RETENTION'
+            'RETURN'
+            'RETURNING'
+            'REUSE'
+            'REVERSE'
+            'REVOKE'
+            'REWRITE'
+            'REWRITE_OR_ERROR'
+            'RIGHT'
+            'rnds'
+            'rnps'
+            'ROLE'
+            'ROLES'
+            'ROLLBACK'
+            'ROLLING'
+            'ROLLUP'
+            'ROUND'
+            'ROW'
+            'ROW_LENGTH'
+            'rowcount'
+            'ROWDEPENDENCIES'
+            'ROWID'
+            'ROWIDTOCHAR'
+            'ROWLABEL'
+            'ROWNUM'
+            'ROWS'
+            'ROWTYPE'
+            'RPAD'
+            'RTRIM'
+            'RULE'
+            'RULES'
+            'RUN'
+            'RUNFORM'
+            'SALT'
+            'SAMPLE'
+            'SAVE'
+            'SAVE_AS_INTERVALS'
+            'SAVEPOINT'
+            'SB4'
+            'SCALE'
+            'SCALE_ROWS'
+            'SCAN'
+            'SCAN_INSTANCES'
+            'SCHEDULER'
+            'SCHEMA'
+            'SCN'
+            'SCN_ASCENDING'
+            'SCN_TO_TIMESTAMP'
+            'SCOPE'
+            'SD_ALL'
+            'SD_INHIBIT'
+            'SD_SHOW'
+            'SECOND'
+            'SECTION'
+            'SECUREFILE'
+            'SECURITY'
+            'SEED'
+            'SEG_BLOCK'
+            'SEG_FILE'
+            'SEGMENT'
+            'SELECT'
+            'SELECTIVITY'
+            'SEMIJOIN'
+            'SEMIJOIN_DRIVER'
+            'SEPARATE'
+            'SEQUENCE'
+            'SEQUENCED'
+            'SEQUENTIAL'
+            'SEQUENTUAL'
+            'SERIALIZABLE'
+            'SERVERERROR'
+            'SESSION'
+            'SESSION_CACHED_CURSORS'
+            'SESSIONS_PER_USER'
+            'SESSIONTIMEZONE'
+            'SESSIONTZNAME'
+            'SET'
+            'SET_TO_JOIN'
+            'SET_TRANSACTION_USE'
+            'SETS'
+            'SETTINGS'
+            'SEVERE'
+            'SHARE'
+            'SHARED'
+            'SHARED_POOL'
+            'SHOW'
+            'SHRINK'
+            'SHUTDOWN'
+            'SIBLINGS'
+            'SID'
+            'SIGN'
+            'SIMPLE'
+            'SIN'
+            'SINGLE'
+            'SINGLE REFERENCE'
+            'SINGLETASK'
+            'SINH'
+            'SIZE'
+            'SKIP'
+            'SKIP_EXT_OPTIMIZER'
+            'SKIP_UNQ_UNUSABLE_IDX'
+            'SKIP_UNUSABLE_INDEXES'
+            'SMALLFILE'
+            'SMALLINT'
+            'SNAPSHOT'
+            'SOME'
+            'SORT'
+            'SOUNDEX'
+            'SOURCE'
+            'SPACE'
+            'SPECIFICATION'
+            'SPFILE'
+            'SPLIT'
+            'spo'
+            'SPOOL'
+            'SPREADSHEET'
+            'SQL'
+            'SQL_TRACE'
+            'SQLBUF'
+            'SQLCODE'
+            'SQLERRM'
+            'SQLERROR'
+            'SQLLDR'
+            'SQLPLUS'
+            'SQLSTATE'
+            'SQRT'
+            'STA'
+            'STANDALONE'
+            'STANDBY'
+            'STAR'
+            'STAR_TRANSFORMATION'
+            'START'
+            'STARTUP'
+            'STATEMENT'
+            'STATEMENT_ID'
+            'STATIC'
+            'STATISTICS'
+            'STATS_BINOMIAL_TEST'
+            'STATS_CROSSTAB'
+            'STATS_F_TEST'
+            'STATS_KS_TEST'
+            'STATS_MODE'
+            'STATS_MW_TEST'
+            'STATS_ONE_WAY_ANOVA'
+            'STATS_T_TEST_INDEP'
+            'STATS_T_TEST_INDEPU'
+            'STATS_T_TEST_ONE'
+            'STATS_T_TEST_PAIRED'
+            'STATS_WSR_TEST'
+            'STDDEV'
+            'STOP'
+            'STORAGE'
+            'STORAGE_ERROR'
+            'STORE'
+            'STREAMS'
+            'STRICT'
+            'STRING'
+            'STRIP'
+            'STRIPE'
+            'STRUCTURE'
+            'SUBMULTISET'
+            'SUBPARTITION'
+            'SUBPARTITION_REL'
+            'SUBPARTITIONS'
+            'SUBQUERIES'
+            'SUBSCRIPT_BEYOND_COUNT'
+            'SUBSCRIPT_OUTSIDE_LIMIT'
+            'SUBSTITUTABLE'
+            'SUBSTR'
+            'SUBSTRB'
+            'SUBTYPE'
+            'SUCCESSFUL'
+            'SUM'
+            'SUMMARY'
+            'SUPPLEMENTAL'
+            'SUSPEND'
+            'SWAP_JOIN_INPUTS'
+            'SWITCH'
+            'SWITCHOVER'
+            'SYNONYM'
+            'SYS_CONNECT_BY_PATH'
+            'SYS_DL_CURSOR'
+            'SYS_FBT_INSDEL'
+            'SYS_OP_BITVEC'
+            'SYS_OP_CAST'
+            'SYS_OP_COL_PRESENT'
+            'SYS_OP_ENFORCE_NOT_NULL$'
+            'SYS_OP_EXTRACT'
+            'SYS_OP_MINE_VALUE'
+            'SYS_OP_NOEXPAND'
+            'SYS_OP_NTCIMG$'
+            'SYS_PARALLEL_TXN'
+            'SYS_RID_ORDER'
+            'SYS_XMLAGG'
+            'SYS_XMLGEN'
+            'SYSAUX'
+            'SYSDATE'
+            'SYSDBA'
+            'SYSOPER'
+            'SYSTEM'
+            'SYSTIMESTAMP'
+            'T'
+            'TABAUTH'
+            'TABLE'
+            'TABLE_STATS'
+            'TABLES'
+            'TABLESPACE'
+            'TABLESPACE_NO'
+            'TABNO'
+            'TAN'
+            'TANH'
+            'TASK'
+            'TEMP_TABLE'
+            'TEMPFILE'
+            'TEMPLATE'
+            'TEMPORARY'
+            'TERMINATE'
+            'TEST'
+            'THAN'
+            'THE'
+            'THEN'
+            'THREAD'
+            'THROUGH'
+            'TIME'
+            'TIME_ZONE'
+            'TIMEOUT'
+            'TIMEOUT_ON_RESOURCE'
+            'TIMESTAMP'
+            'TIMEZONE_ABBR'
+            'TIMEZONE_HOUR'
+            'TIMEZONE_MINUTE'
+            'TIMEZONE_OFFSET'
+            'TIMEZONE_REGION'
+            'TIMING'
+            'TIV_GB'
+            'TIV_SSF'
+            'TO'
+            'TO_BINARY_DOUBLE'
+            'TO_BINARY_FLOAT'
+            'TO_CHAR'
+            'TO_DATE'
+            'TO_MULTI_BYTE'
+            'TO_NUMBER'
+            'TO_SINGLE_BYTE'
+            'TOO_MANY_ROWS'
+            'TOPLEVEL'
+            'TRACE'
+            'TRACING'
+            'TRACKING'
+            'TRAILING'
+            'TRANSACTION'
+            'TRANSACTIONAL'
+            'TRANSITIONAL'
+            'TRANSLATE'
+            'TREAT'
+            'TRIGGER'
+            'TRIGGERS'
+            'TRUE'
+            'TRUNC'
+            'TRUNCATE'
+            'TRUSTED'
+            'TTITLE'
+            'TUNING'
+            'TX'
+            'TYPE'
+            'TYPES'
+            'TZ_OFFSET'
+            'U'
+            'UB2'
+            'UBA'
+            'UI'
+            'UID'
+            'UNARCHIVED'
+            'UNBOUND'
+            'UNBOUNDED'
+            'UNDEF'
+            'UNDEFINE'
+            'UNDER'
+            'UNDO'
+            'UNDROP'
+            'UNIFORM'
+            'UNION'
+            'UNIQUE'
+            'UNLIMITED'
+            'UNLOCK'
+            'UNNEST'
+            'UNPACKED'
+            'UNPROTECTED'
+            'UNQUIESCE'
+            'UNRECOVERABLE'
+            'UNTIL'
+            'UNUSABLE'
+            'UNUSED'
+            'UPD_INDEXES'
+            'UPD_JOININDEX'
+            'UPDATABLE'
+            'UPDATE'
+            'UPDATED'
+            'UPDATING'
+            'UPGRADE'
+            'UPPER'
+            'UPSERT'
+            'UROWID'
+            'USAGE'
+            'USE'
+            'USE_ANTI'
+            'USE_CONCAT'
+            'USE_HASH'
+            'USE_HASH_AGGREGATION'
+            'USE_MERGE'
+            'USE_NL'
+            'USE_NL_WITH_INDEX'
+            'USE_PRIVATE_OUTLINES'
+            'USE_SEMI'
+            'USE_STORED_OUTLINES'
+            'USE_TTT_FOR_GSETS'
+            'USE_WEAK_NAME_RESL'
+            'USER'
+            'USER_DEFINED'
+            'USER_RECYCLEBIN'
+            'USERENV'
+            'USERS'
+            'USING'
+            'VALIDATE'
+            'VALIDATION'
+            'VALUE'
+            'VALUE_ERROR'
+            'VALUES'
+            'VARCHAR'
+            'VARCHAR2'
+            'VARIABLE'
+            'VARIANCE'
+            'VARRAY'
+            'VARYING'
+            'VECTOR_READ'
+            'VECTOR_READ_TRACE'
+            'VERSION'
+            'VERSIONS'
+            'VIEW'
+            'VIEWS'
+            'VISIBLE'
+            'VSIZE'
+            'WAIT'
+            'WALLET'
+            'WELLFORMED'
+            'WHEN'
+            'WHENEVER'
+            'WHERE'
+            'WHILE'
+            'WHITESPACE'
+            'WITH'
+            'WITHIN'
+            'WITHOUT'
+            'WNDS'
+            'WNPS'
+            'WORK'
+            'WRAPPED'
+            'WRITE'
+            'X_DYN_PRUNE'
+            'XID'
+            'XML'
+            'XMLATTRIBUTES'
+            'XMLCOLATTVAL'
+            'XMLELEMENT'
+            'XMLFOREST'
+            'XMLNAMESPACES'
+            'XMLPARSE'
+            'XMLPI'
+            'XMLQUERY'
+            'XMLROOT'
+            'XMLSCHEMA'
+            'XMLSERIALIZE'
+            'XMLTABLE'
+            'XMLTYPE'
+            'YEAR'
+            'YES'
+            'ZERO_DIVIDE'
+            'ZONE')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'SQL*Plus Commands'
+      StyleName = 'SQL*Plus Meta Commands'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '@'
+            '@@'
+            'ABORT'
+            'ACC'
+            'ACCEPT'
+            'APPEND'
+            'BREAK'
+            'BTITLE'
+            'CHANGE'
+            'CLEAR'
+            'COLUMN'
+            'COMPUTE'
+            'CONNECT'
+            'COPY'
+            'DEF'
+            'DEFINE'
+            'DEFINE_EDITOR'
+            'DEL'
+            'DESC'
+            'DESCRIBE'
+            'DISCONNECT'
+            'EDIT'
+            'EXEC'
+            'EXECUTE'
+            'EXIT'
+            'GET'
+            'HELP'
+            'HOST'
+            'IMMEDIATE'
+            'INPUT'
+            'LIST'
+            'MOUNT'
+            'NOMOUNT'
+            'NORMAL'
+            'OFF'
+            'OSERROR'
+            'PAUSE'
+            'PRINT'
+            'PROMPT'
+            'REM'
+            'REMARK'
+            'RUN'
+            'RUNFORM'
+            'SAVE'
+            'SET'
+            'SHOW'
+            'SHUTDOWN'
+            'SPO'
+            'SPOOL'
+            'SQLERROR'
+            'SQLPLUS'
+            'STA'
+            'START'
+            'STARTUP'
+            'TIMING'
+            'TRANSACTIONAL'
+            'TTITLE'
+            'UNDEF'
+            'UNDEFINE'
+            'VARIABLE'
+            'WHENEVER')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'SQL Functions'
+      StyleName = 'SQL Functions'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'abs'
+            'acos'
+            'add_months'
+            'ascii'
+            'asciistr'
+            'asin'
+            'atan'
+            'atan2'
+            'avg'
+            'bfilename'
+            'bin_to_num'
+            'bitand'
+            'cast'
+            'ceil'
+            'chartorowid'
+            'chr'
+            'coalesce'
+            'compose'
+            'concat'
+            'convert'
+            'corr'
+            'cos'
+            'cosh'
+            'count'
+            'covar_pop'
+            'covar_samp'
+            'cume_dist'
+            'current_date'
+            'current_timestamp'
+            'dbtimezone'
+            'decode'
+            'decompose'
+            'dense_rank'
+            'depth'
+            'deref'
+            'dump'
+            'empty_blob'
+            'empty_clob'
+            'existsnode'
+            'exp'
+            'extract'
+            'extractvalue'
+            'first'
+            'floor'
+            'from_tz'
+            'greatest'
+            'group_id'
+            'grouping'
+            'grouping_id'
+            'hextoraw'
+            'initcap'
+            'instr'
+            'last'
+            'last_day'
+            'least'
+            'length'
+            'ln'
+            'localtimestamp'
+            'log'
+            'lower'
+            'lpad'
+            'ltrim'
+            'make_ref'
+            'max'
+            'min'
+            'mod'
+            'months_between'
+            'new_time'
+            'next_day'
+            'nls_charset_decl_len'
+            'nls_charset_id'
+            'nls_charset_name'
+            'nls_initcap'
+            'nls_lower'
+            'nls_upper'
+            'nlssort'
+            'nullif'
+            'numtodsinterval'
+            'numtoyminterval'
+            'nvl'
+            'nvl2'
+            'path'
+            'percent_rank'
+            'percentile_cont'
+            'percentile_disc'
+            'power'
+            'rank'
+            'rawtohex'
+            'rawtonhex'
+            'ref'
+            'reftohex'
+            'regr_avgx'
+            'regr_avgy'
+            'regr_count'
+            'regr_intercept'
+            'regr_r2'
+            'regr_slope'
+            'regr_sxx'
+            'regr_sxystddev'
+            'regr_syy'
+            'round'
+            'rowidtochar'
+            'rowidtonchar'
+            'rpad'
+            'rtrim'
+            'sessiontimezone'
+            'sign'
+            'sin'
+            'sinh'
+            'soundex'
+            'sqrt'
+            'stddev'
+            'stddev_pop'
+            'stddev_samp'
+            'substr'
+            'sum'
+            'sys_connect_by_path'
+            'sys_context'
+            'sys_dburigen'
+            'sys_extract_utc'
+            'sys_guid'
+            'sys_typeid'
+            'sys_xmlagg'
+            'sys_xmlgen'
+            'sysdate'
+            'systimestamp'
+            'tan'
+            'tanh'
+            'to_char'
+            'to_clob'
+            'to_date'
+            'to_dsinterval'
+            'to_lob'
+            'to_multi_byte'
+            'to_nchar'
+            'to_nclob'
+            'to_number'
+            'to_single_byte'
+            'to_timestamp'
+            'to_timestamp_tz'
+            'to_yminterval'
+            'translate'
+            'treat'
+            'trim'
+            'trunc'
+            'tz_offset'
+            'uid'
+            'unistr'
+            'updatexml'
+            'upper'
+            'user'
+            'userenv'
+            'using'
+            'value'
+            'var_pop'
+            'var_samp'
+            'variance'
+            'vsize'
+            'width_bucket'
+            'xmlagg'
+            'xmlcolattval'
+            'xmlconcat'
+            'xmlforest'
+            'xmlsequence'
+            'xmltransform')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Default Oracle Packages'
+      StyleName = 'Default Oracle Packages'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'dbms_alert'
+            'dbms_application_info'
+            'dbms_aq'
+            'dbms_aqadm'
+            'dbms_aqelm'
+            'dbms_backup_restore'
+            'dbms_ddl'
+            'dbms_debug'
+            'dbms_defer'
+            'dbms_defer_query'
+            'dbms_defer_sys'
+            'dbms_describe'
+            'dbms_distributed_trust_admin'
+            'dbms_fga'
+            'dbms_flashback'
+            'dbms_hs_passthrough'
+            'dbms_iot'
+            'dbms_job'
+            'dbms_ldap'
+            'dbms_libcache'
+            'dbms_lob'
+            'dbms_lock'
+            'dbms_logmnr'
+            'dbms_logmnr_cdc_publish'
+            'dbms_logmnr_cdc_subscribe'
+            'dbms_logmnr_d'
+            'dbms_metadata'
+            'dbms_mview'
+            'dbms_obfuscation_toolkit'
+            'dbms_odci'
+            'dbms_offline_og'
+            'dbms_offline_snapshot'
+            'dbms_olap'
+            'dbms_oracle_trace_agent'
+            'dbms_oracle_trace_user'
+            'dbms_outln'
+            'dbms_outln_edit'
+            'dbms_output'
+            'dbms_pclxutil'
+            'dbms_pipe'
+            'dbms_profiler'
+            'dbms_random'
+            'dbms_rectifier_diff'
+            'dbms_redefinition'
+            'dbms_refresh'
+            'dbms_repair'
+            'dbms_repcat'
+            'dbms_repcat_admin'
+            'dbms_repcat_instatiate'
+            'dbms_repcat_rgt'
+            'dbms_reputil'
+            'dbms_resource_manager'
+            'dbms_resource_manager_privs'
+            'dbms_resumable'
+            'dbms_rls'
+            'dbms_rowid'
+            'dbms_session'
+            'dbms_shared_pool'
+            'dbms_snapshot'
+            'dbms_space'
+            'dbms_space_admin'
+            'dbms_sql'
+            'dbms_standard'
+            'dbms_stats'
+            'dbms_trace'
+            'dbms_transaction'
+            'dbms_transform'
+            'dbms_tts'
+            'dbms_types'
+            'dbms_utility'
+            'dbms_wm'
+            'dbms_xmlgen'
+            'dbms_xmlquery'
+            'dbms_xmlsave'
+            'debug_extproc'
+            'deleting'
+            'outln_pkg'
+            'plitblm'
+            'raise_application_error'
+            'sdo_cs'
+            'sdo_geom'
+            'sdo_lrs'
+            'sdo_migrate'
+            'sdo_tune'
+            'set_transaction_use'
+            'standard'
+            'utl_coll'
+            'utl_encode'
+            'utl_file'
+            'utl_http'
+            'utl_inaddr'
+            'utl_pg'
+            'utl_raw'
+            'utl_ref'
+            'utl_smtp'
+            'utl_tcp'
+            'utl_url')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Predefined Exceptions'
+      StyleName = 'Predefined Exceptions'
+      BlockType = btTagDetect
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'access_into_null'
+            'collection_is_null'
+            'cursor_already_open'
+            'dbms_lob.access_error'
+            'dbms_lob.invalid_directory'
+            'dbms_lob.noexist_directory'
+            'dbms_lob.nopriv_directory'
+            'dbms_lob.open_toomany'
+            'dbms_lob.operation_failed'
+            'dbms_lob.unopened_file'
+            'dbms_sql.inconsistent_type'
+            'dup_val_on_index'
+            'invalid_cursor'
+            'invalid_number'
+            'login_denied'
+            'no_data_found'
+            'not_logged_on'
+            'others'
+            'program_error'
+            'storage_error'
+            'subscript_beyond_count'
+            'subscript_outside_limit'
+            'timeout_on_resource'
+            'too_many_rows'
+            'utl_file.internal_error'
+            'utl_file.invalid_filehandle'
+            'utl_file.invalid_mode'
+            'utl_file.invalid_operation'
+            'utl_file.invalid_path'
+            'utl_file.read_error'
+            'utl_file.write_error'
+            'value_error'
+            'zero_divide')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'ToadFold'
+      StyleName = 'Current block'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '/*startfold*/')
+          TokenTypes = 2
+          IgnoreCase = True
+        end>
+      BlockEnd = 'ToadFold <end>'
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      DrawStaple = True
+      CollapseFmt = ' %s-1'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'ToadFold <end>'
+      BlockName = 'ToadFold'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '/*endfold*/')
+          TokenTypes = 2
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Comment'
+      BlockName = 'Comment'
+      NotParent = True
+      ConditionList = <
+        item
+          TokenTypes = 2
+        end>
+      BlockEnd = 'Comment <end>'
+      DisplayInTree = False
+      HighlightPos = cpAny
+      CollapseFmt = 'Comments...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Comment <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TokenTypes = 1021
+        end
+        item
+          TokenTypes = 2
+        end>
+      BlockOffset = 1
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Constant'
+      StrictParent = True
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'constant')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TokenTypes = 4
+        end>
+      BlockOffset = 1
+      BlockEnd = 'Constant <end>'
+      NotCollapsed = True
+      NameFmt = '%s1 %s-1'
+      GroupFmt = 'Constants'
+      HighlightPos = cpAny
+      TreeGroupStyle = 'Group (tree)'
+      TreeItemImage = 4
+      TreeGroupImage = 0
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Constant <end>'
+      BlockName = 'Constant'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Case'
+      StyleName = 'Current block'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'case')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          CondType = tcNotEqual
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Case <end>'
+      DisplayInTree = False
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      DrawStaple = True
+      CollapseFmt = '%s0...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Case <end>'
+      BlockName = 'Case'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Case'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'If'
+      StyleName = 'Current block'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'if')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          CondType = tcNotEqual
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'If <end>'
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      DrawStaple = True
+      CollapseFmt = '%s0...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'If <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'if')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'DML'
+      BlockName = 'DML'
+      NotParent = True
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'cursor'
+            'delete'
+            'insert'
+            'select'
+            'update    ')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'DML <end>'
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0...'
+      TreeItemImage = 6
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'DML <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+        end>
+      BlockEnd = 'DML'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'DDL (1)'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'cluster'
+            'context'
+            'dimension'
+            'directory'
+            'index'
+            'library'
+            'materialized'
+            'profile'
+            'public'
+            'role'
+            'rollback'
+            'sequence'
+            'table'
+            'tablespace'
+            'unique'
+            'user'
+            'view')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'DDL (1) <end>'
+      DisplayInTree = False
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'DDL (1) <end>'
+      BlockName = 'DDL (1)'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '/'
+            ';')
+          TokenTypes = 8
+        end>
+      BlockEnd = 'DDL (1)'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'DDL (2)'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'cluster'
+            'context'
+            'dimension'
+            'directory'
+            'index'
+            'library'
+            'materialized'
+            'profile'
+            'public'
+            'role'
+            'rollback'
+            'sequence'
+            'table'
+            'tablespace'
+            'unique'
+            'user'
+            'view')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'replace')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'or')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'DDL (2) <end>'
+      DisplayInTree = False
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1 %s-2 %s-3...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'DDL (2) <end>'
+      BlockName = 'DDL (2)'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '/'
+            ';')
+          TokenTypes = 8
+        end>
+      BlockEnd = 'DDL (2)'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Cursor Open'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'for')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TokenTypes = 4
+        end
+        item
+          TagList.Strings = (
+            'open')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Cursor Open <end>'
+      NameFmt = '%s0 %s-1'
+      HighlightPos = cpAny
+      CollapseFmt = '...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Cursor Open <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+        end>
+      BlockEnd = 'Cursor Open'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'For'
+      StyleName = 'Current block'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'loop')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TokenTypes = 4
+        end
+        item
+          TagList.Strings = (
+            'for'
+            'while')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'For <end>'
+      DisplayInTree = False
+      RefToCondEnd = True
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      DrawStaple = True
+      CollapseFmt = '%s0 %s-1 %s-2...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'For <end>'
+      BlockName = 'For'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'loop')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Loop'
+      StyleName = 'Current block'
+      BlockName = 'For'
+      NotParent = True
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'loop')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          CondType = tcNotEqual
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Loop <end>'
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      DrawStaple = True
+      CollapseFmt = '%s0...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Loop <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'loop')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Function Separator'
+      StyleName = 'Function separator'
+      BlockType = btLineBreak
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'function'
+            'procedure')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = '('
+      StyleName = '()'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '(')
+          TokenTypes = 8
+        end>
+      BlockEnd = ')'
+      DisplayInTree = False
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      CollapseFmt = '( ... )'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = ')'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ')')
+          TokenTypes = 8
+        end>
+      BlockEnd = '('
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Exception'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'exception')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Exception <end>'
+      DisplayInTree = False
+      NameFmt = '%s0 %s-2'
+      HighlightPos = cpAny
+      DrawStaple = True
+      CollapseFmt = '%s0 ...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Exception <end>'
+      BlockName = 'Exception'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Alter'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'alter')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Alter <end>'
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Alter <end>'
+      BlockName = 'Alter'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+        end>
+      BlockEnd = 'Alter'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Begin'
+      StyleName = 'Current block'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'begin')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Begin <end>'
+      DynHighlight = dhBound
+      HighlightPos = cpRange
+      DynSelectMin = True
+      DrawStaple = True
+      CollapseFmt = '%s0...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Begin <end>'
+      BlockName = 'Begin'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'case'
+            'if'
+            'loop')
+          CondType = tcNotEqual
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'PLSQL (1)'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'function'
+            'package'
+            'procedure'
+            'trigger'
+            'type')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'PLSQL <end>'
+      DisplayInTree = False
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1 %s-2...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'PLSQL (2)'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'function'
+            'java'
+            'package'
+            'procedure'
+            'trigger'
+            'type')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'replace')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'or')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'PLSQL <end>'
+      DisplayInTree = False
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1 %s-2 %s-3 %s-4...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'PLSQL <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '/')
+          TokenTypes = 8
+        end
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+          IgnoreCase = True
+        end
+        item
+          CondType = tcSkip
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Java Source (1)'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'named')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'source')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'java')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Java Source <end>'
+      DisplayInTree = False
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1 %s-2...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Java Source (2)'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'named')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'source')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'java')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'replace')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'or')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Java Source <end>'
+      DisplayInTree = False
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1 %s-2 %s-3 %s-4...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Java Source <end>'
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            '/')
+          TokenTypes = 8
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            '}')
+          TokenTypes = 8
+          IgnoreCase = True
+        end>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Package Procedure'
+      ConditionList = <
+        item
+          TagList.Strings = (
+            'function'
+            'procedure')
+          TokenTypes = 4
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'create'
+            'replace')
+          CondType = tcNotEqual
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      DisplayInTree = False
+      RefToCondEnd = True
+      HighlightPos = cpAny
+      CollapseFmt = '%s0 %s-1...'
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Package Procedure (1) <end>'
+      BlockName = 'Package Procedure'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Package Procedure'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Package Procedure (2) <end>'
+      BlockName = 'Package Procedure'
+      StrictParent = True
+      BlockType = btRangeEnd
+      ConditionList = <
+        item
+          TagList.Strings = (
+            ';')
+          TokenTypes = 8
+          IgnoreCase = True
+        end
+        item
+          TagList.Strings = (
+            'if'
+            'loop')
+          CondType = tcNotEqual
+          TokenTypes = 4
+        end
+        item
+          TagList.Strings = (
+            'end')
+          TokenTypes = 4
+          IgnoreCase = True
+        end>
+      BlockEnd = 'Package Procedure'
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Toad_Datatypes'
+      StyleName = 'Toad_Datatypes'
+      BlockType = btTagDetect
+      ConditionList = <>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Toad_UserTables'
+      StyleName = 'Toad_UserTables'
+      BlockType = btTagDetect
+      ConditionList = <>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Toad_UserViews'
+      StyleName = 'Toad_UserViews'
+      BlockType = btTagDetect
+      ConditionList = <>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Toad_UserProcs'
+      StyleName = 'Toad_UserProcs'
+      BlockType = btTagDetect
+      ConditionList = <>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end
+    item
+      DisplayName = 'Toad_SYSViews'
+      StyleName = 'Toad_SYSViews'
+      BlockType = btTagDetect
+      ConditionList = <>
+      HighlightPos = cpAny
+      IgnoreAsParent = False
+    end>
+  CodeTemplates = <
+    item
+      Name = 'anon'
+      Description = 'Anonymous block'
+      Code.Strings = (
+        'DECLARE'
+        '   dummy NUMBER;'
+        'BEGIN'
+        '   SELECT count(*) INTO dummy FROM dual;'
+        '   |;'
+        'EXCEPTION'
+        '   WHEN NO_DATA_FOUND THEN'
+        '      NULL;'
+        '   WHEN OTHERS THEN'
+        '      NULL;'
+        'END;')
+    end
+    item
+      Name = 'assertloc'
+      Description = 'Local Assertion Procedure with supporting DBMS_OUTPUT substitute'
+      Code.Strings = (
+        'DECLARE'
+        '   assertion_failure EXCEPTION;'
+        '   PROCEDURE pl ('
+        '      str         IN   VARCHAR2,'
+        '      len         IN   INTEGER := 80,'
+        '      expand_in   IN   BOOLEAN := TRUE'
+        '   )'
+        '   IS '
+        '      v_len   PLS_INTEGER     := LEAST (len, 255);'
+        '      v_str   VARCHAR2 (2000);'
+        '   BEGIN'
+        '      IF LENGTH (str) > v_len'
+        '      THEN'
+        '         v_str := SUBSTR (str, 1, v_len);'
+        '         DBMS_OUTPUT.put_line (v_str);'
+        '         pl (SUBSTR (str, len   + 1), v_len,expand_in);'
+        '      ELSE'
+        '         v_str := str;'
+        '         DBMS_OUTPUT.put_line (v_str);'
+        '      END IF;'
+        '   EXCEPTION'
+        '      WHEN OTHERS'
+        '      THEN'
+        '         IF expand_in'
+        '         THEN'
+        '            DBMS_OUTPUT.ENABLE (1000000);'
+        '            DBMS_OUTPUT.put_line (v_str);'
+        '         ELSE'
+        '            RAISE;'
+        '         END IF;'
+        '   END;'
+        '   '
+        '   PROCEDURE assert ('
+        '      condition_in   IN   BOOLEAN,'
+        '      msg_in         IN   VARCHAR2 := NULL'
+        '   )'
+        '   IS'
+        '   BEGIN'
+        '      IF    NOT condition_in'
+        '         OR condition_in IS NULL'
+        '      THEN'
+        '         IF msg_in IS NOT NULL'
+        '         THEN'
+        '            pl (msg_in);'
+        '            pl (DBMS_UTILITY.format_call_stack);'
+        '         END IF;'
+        ''
+        '         RAISE assertion_failure;'
+        '      END IF;'
+        '   END;'
+        'BEGIN'
+        '   -- Sample usage'
+        '   assert ( | my_parameter_in IS NOT NULL,'
+        '      '#39'Value cannot be NULL'#39');'
+        'EXCEPTION'
+        '   WHEN assertion_failure  '
+        '   THEN'
+        '      -- Decide if you want to handle this locally or not.    '
+        'END;')
+    end
+    item
+      Name = 'autonproc'
+      Description = 'Autonomous transaction PROCEDURE shell'
+      Code.Strings = (
+        'PROCEDURE | ()'
+        'IS'
+        '   -- Available in Oracle8i and above'
+        '   PRAGMA AUTONOMOUS_TRANSACTION;'
+        'BEGIN'
+        '   -- Upon successful completion, save all changes.'
+        '   COMMIT;'
+        'EXCEPTION'
+        '   -- For each error handler, don'#39't forget the rollback!'
+        '   WHEN OTHERS '
+        '   THEN'
+        '      ROLLBACK;   '
+        'END;')
+    end
+    item
+      Name = 'bcquery'
+      Description = 'BULK COLLECT Query'
+      Code.Strings = (
+        'DECLARE'
+        '   l_array1 <array_type_declaration>;'
+        '   l_array2 <array_type_declaration>;'
+        'BEGIN'
+        '   -- Fetch into individual collections, one for each'
+        '   -- element in the SELECT list.'
+        '   SELECT |'
+        '      BULK COLLECT INTO l_array1, l_array2'
+        '      FROM '
+        '     WHERE ;'
+        'END;')
+    end
+    item
+      Name = 'case'
+      Description = 'CASE statment'
+      Code.Strings = (
+        'case |'
+        '   WHEN condition THEN'
+        ''
+        '   WHEN condition THEN'
+        ''
+        '   ELSE'
+        ''
+        'END CASE;')
+    end
+    item
+      Name = 'crbl'
+      Description = 'Entire cursor block'
+      Code.Strings = (
+        'DECLARE'
+        '   CURSOR &&c1 IS'
+        '      SELECT | FROM   WHERE;'
+        '   c1rec &&c1%ROWTYPE;'
+        'BEGIN'
+        '   OPEN &&c1;'
+        '   LOOP'
+        '      FETCH &&c1 INTO c1rec;'
+        '      EXIT WHEN &&c1%NOTFOUND;'
+        '   END LOOP;'
+        '   CLOSE &&c1;'
+        'END;')
+    end
+    item
+      Name = 'crbo'
+      Description = 'Package body cursor'
+      Code.Strings = (
+        '/* declare package body */'
+        'CURSOR c1 RETURN |tablename%ROWTYPE IS'
+        '   SELECT ....;')
+    end
+    item
+      Name = 'crloop'
+      Description = 'Cursor LOOP'
+      Code.Strings = (
+        'OPEN &&c1;'
+        'LOOP'
+        '   FETCH &&c1.| INTO  ;'
+        '   EXIT WHEN &&c1%NOTFOUND;'
+        'END LOOP;'
+        'CLOSE &&c1;')
+    end
+    item
+      Name = 'crsp'
+      Description = 'Package spec cursor'
+      Code.Strings = (
+        '/* declare package cursor specification */'
+        'CURSOR c1 RETURN |tablename%ROWTYPE;')
+    end
+    item
+      Name = 'crt'
+      Description = 'CREATE TABLE AS Query'
+      Code.Strings = (
+        'CREATE TABLE | AS ('
+        ')')
+    end
+    item
+      Name = 'cur'
+      Description = 'CURSOR declaration'
+      Code.Strings = (
+        'CURSOR c1 IS'
+        '   SELECT | FROM table_name WHERE column_name = value;')
+    end
+    item
+      Name = 'curfor'
+      Description = 'CURSOR FOR-LOOP'
+      Code.Strings = (
+        'FOR c1_rec IN &&c1 LOOP'
+        '   |;'
+        'END LOOP;')
+    end
+    item
+      Name = 'curpar'
+      Description = 'CURSOR with Parameter declaration'
+      Code.Strings = (
+        'CURSOR c2 (xxx NUMBER) IS'
+        '   SELECT | FROM table_name WHERE column_name = xxx;')
+    end
+    item
+      Name = 'curpfor'
+      Description = 'CURSOR with Parameter FOR-LOOP'
+      Code.Strings = (
+        'FOR c2_rec IN c2 (yyy) LOOP'
+        '   |;'
+        'END LOOP;')
+    end
+    item
+      Name = 'dolocal'
+      Description = 'Local DBMS_OUTPUT Substitute'
+      Code.Strings = (
+        'DECLARE'
+        
+          '   -- Will wrap arbitrarily long strings, and automatically expa' +
+          'nd  '
+        '   -- the DBMS_OUTPUT buffer.'
+        '   PROCEDURE pl ('
+        '      str         IN   VARCHAR2,'
+        '      len         IN   INTEGER := 80,'
+        '      expand_in   IN   BOOLEAN := TRUE'
+        '   )'
+        '   IS '
+        '      v_len   PLS_INTEGER     := LEAST (len, 255);'
+        '      v_str   VARCHAR2 (2000);'
+        '   BEGIN'
+        '      IF LENGTH (str) > v_len'
+        '      THEN'
+        '         v_str := SUBSTR (str, 1, v_len);'
+        '         DBMS_OUTPUT.put_line (v_str);'
+        '         pl (SUBSTR (str, len   + 1), v_len,expand_in);'
+        '      ELSE'
+        '         v_str := str;'
+        '         DBMS_OUTPUT.put_line (v_str);'
+        '      END IF;'
+        '   EXCEPTION'
+        '      WHEN OTHERS'
+        '      THEN'
+        '         IF expand_in'
+        '         THEN'
+        '            DBMS_OUTPUT.ENABLE (1000000);'
+        '            DBMS_OUTPUT.put_line (v_str);'
+        '         ELSE'
+        '            RAISE;'
+        '         END IF;'
+        '   END;'
+        'BEGIN'
+        '   |'
+        'END;')
+    end
+    item
+      Name = 'fadel'
+      Description = 'FORALL Delete'
+      Code.Strings = (
+        'DECLARE'
+        '   l_array  <array_type_declaration>;'
+        'BEGIN'
+        '   FORALL indx IN l_array.FIRST .. l_array.LAST'
+        '      DELETE FROM |'
+        '       WHERE column = l_array (indx);'
+        'END;')
+    end
+    item
+      Name = 'faexc'
+      Description = 'FORALL with SAVE EXCEPTIONS error handling'
+      Code.Strings = (
+        'DECLARE -- Oracle9i and above!'
+        '  l_array   <array_type_declaration>;'
+        '  bulk_errors EXCEPTION;'
+        '   PRAGMA EXCEPTION_INIT ( bulk_errors, -24381 );'
+        'BEGIN    '
+        '   FORALL indx IN l_array.FIRST .. l_array.LAST'
+        '      SAVE EXCEPTIONS'
+        '      /*DML statement of choice*/'
+        #9'  |;'
+        'EXCEPTION'
+        '   WHEN bulk_errors '
+        '   THEN '
+        '      FOR indx IN 1 .. SQL%BULK_EXCEPTIONS.COUNT'
+        '      LOOP'
+        '         DBMS_OUTPUT.PUT_LINE ('
+        '            '#39'Error '#39' || indx || '#39' occurred during '#39' ||'
+        
+          '            '#39'iteration '#39' || SQL%BULK_EXCEPTIONS(indx).ERROR_INDE' +
+          'X ||'
+        '            '#39' updating name to '#39' ||'
+        
+          '                 enames_with_errors(SQL%BULK_EXCEPTIONS(indx).ER' +
+          'ROR_INDEX));'
+        '         DBMS_OUTPUT.PUT_LINE ('
+        '            '#39'Oracle error is '#39' ||'
+        '            SQLERRM(-1 * SQL%BULK_EXCEPTIONS(indx).ERROR_CODE));'
+        '      END LOOP;   '
+        'END;'
+        '/')
+    end
+    item
+      Name = 'fains'
+      Description = 'FORALL Insert'
+      Code.Strings = (
+        'DECLARE'
+        '   l_array1     <array_type_declaration>;'
+        '   l_array2     <array_type_declaration>;'
+        '   l_array3     <array_type_declaration>;'
+        'BEGIN'
+        '   FORALL indx IN l_array1.FIRST .. l_array1.LAST'
+        '      INSERT INTO |'
+        '         ( column list )'
+        '         VALUES'
+        '         (l_array2 (indx), l_array3 (indx) ...);'
+        'END;')
+    end
+    item
+      Name = 'faupd'
+      Description = 'FORALL Update'
+      Code.Strings = (
+        'DECLARE'
+        '   l_array1 <array_type_declaration>;'
+        '   l_array2 <array_type_declaration>;'
+        'BEGIN'
+        '   FORALL indx IN l_array1.FIRST .. l_array1.LAST'
+        '      UPDATE |'
+        '         SET column = l_array2 (indx)'
+        '       WHERE column = l_array1 (indx);'
+        'END;')
+    end
+    item
+      Name = 'for'
+      Description = 'FOR-LOOP statement'
+      Code.Strings = (
+        'FOR | IN 1 .. 10 LOOP'
+        ''
+        'END LOOP;')
+    end
+    item
+      Name = 'forwo'
+      Description = 'Nested FOR-LOOPs with EXIT-WHEN outer'
+      Code.Strings = (
+        '<<outer>>'
+        'FOR i IN 1 .. 10 LOOP'
+        ''
+        '   FOR j IN 1 .. 10 LOOP'
+        ''
+        '      EXIT outer WHEN |;'
+        '   END LOOP;'
+        'END LOOP outer;')
+    end
+    item
+      Name = 'func'
+      Description = 'FUNCTION shell'
+      Code.Strings = (
+        'FUNCTION | () RETURN &&returntype'
+        'IS'
+        '  xxx &&returntype;'
+        'BEGIN'
+        ''
+        '   RETURN xxx;'
+        'END;')
+    end
+    item
+      Name = 'getline'
+      Description = 'Local substitute for UTL_FILE.GET_LINE'
+      Code.Strings = (
+        'DECLARE'
+        '   -- Trap NO_DATA_FOUND and return EOF flag.'
+        '   file_id UTL_FILE.FILE_TYPE;'
+        '   line VARCHAR2(32767);'
+        '   eof BOOLEAN;'
+        ''
+        '   PROCEDURE get_nextline '
+        '     (file_in IN UTL_FILE.FILE_TYPE, '
+        '      line_out OUT VARCHAR2, '
+        '      eof_out OUT BOOLEAN)'
+        '   IS'
+        '   BEGIN'
+        '      UTL_FILE.GET_LINE (file_in, line_out);'
+        '      eof_out := FALSE;'
+        '   EXCEPTION'
+        '      WHEN NO_DATA_FOUND'
+        '      THEN'
+        '        line_out := NULL;'
+        '        eof_out  := TRUE;'
+        '   END;'
+        'BEGIN /* main */'
+        '   file_id := UTL_FILE.FOPEN ('
+        '      <location>, <filename>, max_linesize => 32767);'
+        '      '
+        '   LOOP'
+        '      get_nextline (file_id, line, eof);'
+        '      EXIT WHEN eof;'
+        '      /*process line*/'
+        #9'  |'
+        '   END LOOP;'
+        '   '
+        '   UTL_FILE.FCLOSE (file_id);'
+        'END;   ')
+    end
+    item
+      Name = 'goto'
+      Description = 'GOTO statment'
+      Code.Strings = (
+        '<<code_label>>'
+        '|;'
+        'goto code_label;')
+    end
+    item
+      Name = 'ift'
+      Description = 'IF-THEN statement'
+      Code.Strings = (
+        'IF | THEN'
+        ''
+        'END IF;')
+    end
+    item
+      Name = 'ifte'
+      Description = 'IF-THEN-ELSE statement'
+      Code.Strings = (
+        'IF | THEN'
+        ''
+        'ELSE'
+        ''
+        'END IF;')
+    end
+    item
+      Name = 'iftei'
+      Description = 'IF-THEN-ELSIF statement'
+      Code.Strings = (
+        'IF | THEN'
+        ''
+        'ELSIF condition THEN'
+        ''
+        'ELSE'
+        ''
+        'END IF;')
+    end
+    item
+      Name = 'invproc'
+      Description = 'Invoker Rights PROCEDURE shell'
+      Code.Strings = (
+        'PROCEDURE | ()'
+        '  AUTHID CURRENT_USER'
+        'IS'
+        'BEGIN'
+        ''
+        'END;')
+    end
+    item
+      Name = 'lp'
+      Description = 'LOOP statement'
+      Code.Strings = (
+        'LOOP'
+        '   |;'
+        'END LOOP;')
+    end
+    item
+      Name = 'lpew'
+      Description = 'LOOP with EXIT-WHEN statement'
+      Code.Strings = (
+        'LOOP'
+        '   EXIT WHEN |;'
+        'END LOOP;')
+    end
+    item
+      Name = 'lpex'
+      Description = 'LOOP with EXIT statement'
+      Code.Strings = (
+        'LOOP'
+        '   IF | THEN'
+        '      EXIT;'
+        '   END IF;'
+        'END LOOP;')
+    end
+    item
+      Name = 'mta'
+      Description = 'MODIFY TABLE ADD'
+      Code.Strings = (
+        'MODIFY TABLE | ADD ('
+        ')')
+    end
+    item
+      Name = 'ndsmrq'
+      Description = 'NDS multiple row query'
+      Code.Strings = (
+        'DECLARE'
+        '   l_var VARCHAR2(32767);'
+        '   TYPE refcur_t IS REF CURSOR;'
+        '   l_cursor refcur_t;'
+        '   l_record table%ROWTYPE; -- MODIFY TO MATCH SELECT'
+        'BEGIN'
+        '   OPEN l_cursor FOR '#39'SELECT | '#39';'
+        '   LOOP'
+        '      FETCH l_cursor INTO l_record;'
+        '      EXIT WHEN l_cursor%NOTFOUND;'
+        '   END LOOP;'
+        '   CLOSE l_cursor;'
+        'END;')
+    end
+    item
+      Name = 'ndsplsql'
+      Description = 'NDS dynamic PL/SQL block execution'
+      Code.Strings = (
+        'DECLARE'
+        '   l_block VARCHAR2(32767) :='
+        '      '#39'| '#39';'
+        'BEGIN'
+        '   EXECUTE IMMEDIATE '
+        '      '#39'BEGIN '#39' || l_block || '#39'END;'#39
+        '      INTO l_var'
+        '      USING var1 IN, var2 IN OUT, var3 OUT;'
+        'END;')
+    end
+    item
+      Name = 'ndssrq'
+      Description = 'NDS single row query'
+      Code.Strings = (
+        'DECLARE'
+        '   l_var VARCHAR2(32767);'
+        'BEGIN'
+        '   EXECUTE IMMEDIATE '
+        '      '#39'SELECT | '#39
+        '      INTO l_var'
+        '      USING;'
+        'END;')
+    end
+    item
+      Name = 'proc'
+      Description = 'PROCEDURE shell'
+      Code.Strings = (
+        'PROCEDURE | ()'
+        'IS'
+        'BEGIN'
+        ''
+        'END;')
+    end
+    item
+      Name = 'recins'
+      Description = 'Record-based Insert'
+      Code.Strings = (
+        'DECLARE  '
+        '   l_record &&tablename%ROWTYPE;'
+        'BEGIN'
+        '   -- Available in Oracle9i Release 2 and above'
+        '   INSERT INTO &&tablename'
+        '      VALUES l_record;'
+        '   |'
+        'END;')
+    end
+    item
+      Name = 'record'
+      Description = 'Sample record declaration'
+      Code.Strings = (
+        'TYPE |RecordName IS RECORD ('
+        '  deptno  NUMBER;'
+        '  deptname dept.name%TYPE );'
+        'dept_rec RecordName;')
+    end
+    item
+      Name = 'recupd'
+      Description = 'Record-based Update'
+      Code.Strings = (
+        'DECLARE  '
+        '   l_record &&tablename%ROWTYPE;'
+        'BEGIN'
+        '   -- Available in Oracle9i Release 2 and above'
+        '   UPDATE &&tablename'
+        '      SET ROW = l_record'
+        '    WHERE |;'
+        'END;')
+    end
+    item
+      Name = 'ups'
+      Description = 'UPDATE with SAVEPOINTS'
+      Code.Strings = (
+        'BEGIN'
+        '   SAVEPOINT my_point;'
+        '   UPDATE | SET ;'
+        'EXCEPTION'
+        '   WHEN OTHERS THEN'
+        '      ROLLBACK TO my_point;'
+        'END;')
+    end
+    item
+      Name = 'utlfexc'
+      Description = 'UTL_FILE exception handling'
+      Code.Strings = (
+        'DECLARE'
+        '   fid UTL_FILE.FILE_TYPE;'
+        ''
+        '   PROCEDURE recNgo (str IN VARCHAR2)'
+        '   IS'
+        '   BEGIN'
+        '      DBMS_OUTPUT.PUT_LINE (CONCAT('#39'UTL_FILE error: '#39', str));'
+        '      UTL_FILE.FCLOSE (fid);'
+        '   END;'
+        'BEGIN'
+        ''
+        '    |'
+        ''
+        'EXCEPTION'
+        '   WHEN UTL_FILE.INVALID_PATH'
+        '    THEN recNgo ('#39'invalid_path'#39'); '
+        '   WHEN UTL_FILE.INVALID_MODE'
+        '    THEN recNgo ('#39'invalid_mode'#39');'
+        '   WHEN UTL_FILE.INVALID_FILEHANDLE'
+        '    THEN recNgo ('#39'invalid_filehandle'#39');'
+        '   WHEN UTL_FILE.INVALID_OPERATION'
+        '    THEN recNgo ('#39'invalid_operation'#39');'
+        '   WHEN UTL_FILE.READ_ERROR'
+        '    THEN recNgo ('#39'read_error'#39');'
+        '   WHEN UTL_FILE.WRITE_ERROR'
+        '    THEN recNgo ('#39'write_error'#39');'
+        '   WHEN UTL_FILE.INTERNAL_ERROR'
+        '    THEN recNgo ('#39'internal_error'#39');'
+        '   WHEN OTHERS'
+        '    THEN recNgo (SQLERRM);'
+        'END;')
+    end
+    item
+      Name = '1_sema1'
+      Description = #44208#51116#53580#49828#53944
+      Code.Strings = (
+        
+          'SELECT '#39'http://localhost:8082/sema/FICO/listFI_CO_GRPWR_INTRFC.d' +
+          'o?key1='#39'|||KEY1'
+        '       ||CHR(38)||'#39'key2='#39'||NVL(KEY2,'#39#39') '
+        '       ||CHR(38)||'#39'key3='#39'||NVL(KEY3,'#39#39') '
+        '       ||CHR(38)||'#39'key4='#39'||NVL(KEY4,'#39#39') '
+        '       ||CHR(38)||'#39'key5='#39'||NVL(KEY5,'#39#39') '
+        '       ||CHR(38)||'#39'key6='#39'||NVL(KEY6,'#39#39') '
+        '       ||CHR(38)||'#39'key7='#39'||NVL(KEY7,'#39#39') '
+        '       ||CHR(38)||'#39'key8='#39'||NVL(KEY8,'#39#39') '
+        '       ||CHR(38)||'#39'key9='#39'||NVL(KEY9,'#39#39') '
+        '       ||CHR(38)||'#39'key10='#39'||NVL(KEY10,'#39#39') '
+        '       ||CHR(38)||'#39'etc1='#39'||NVL(ETC1,'#39#39') '
+        '       ||CHR(38)||'#39'etc2='#39'||NVL(ETC2,'#39#39') '
+        '       ||CHR(38)||'#39'etc3='#39'||NVL(ETC3,'#39#39') '
+        '       ||CHR(38)||'#39'etc4='#39'||NVL(ETC4,'#39#39') '
+        '       ||CHR(38)||'#39'etc5='#39'||NVL(ETC5,'#39#39') '
+        '       ||CHR(38)||'#39'etc6='#39'||NVL(ETC6,'#39#39') '
+        '       ||CHR(38)||'#39'etc7='#39'||NVL(ETC7,'#39#39') '
+        '       ||CHR(38)||'#39'etc8='#39'||NVL(ETC8,'#39#39') '
+        '       ||CHR(38)||'#39'etc9='#39'||NVL(ETC9,'#39#39') '
+        '       ||CHR(38)||'#39'etc10='#39'||NVL(ETC10,'#39#39') '
+        '       ||CHR(38)||'#39'gwStatus=END'#39' '
+        '       ||CHR(38)||'#39'curloginid='#39'||NVL(LOGINID,'#39#39') '
+        '       ||CHR(38)||'#39'gwId='#39'||NVL(GW_ID,'#39#39') '
+        '  FROM T_LEGACY_INTERFACE WHERE KEY1 = '#39#39)
+    end
+    item
+      Name = '1_sema2'
+      Description = #44228#51340#52404#53356
+      Code.Strings = (
+        'UPDATE SEMA_OWN.TBMT_FINANCEACCOUNT_I A'
+        '   SET A.RECPTN_ACNUT_DPSR_NM = DPSR_NM'
+        '     , A.RECPTN_ACNUT_RSLT_CD = '#39'0000'#39
+        '     , A.RECPTN_ACNUT_RSLT_CONT = '#39#51221#49345'('#51068#52824')'#39
+        '     , A.RECPTN_ACNUT_NRMLT_YN = '#39'1'#39
+        '     , A.UPD_DATE = REG_DATE'
+        ' WHERE A.RECPTN_ACNUT_TRX_ID = '#39#39';')
+    end
+    item
+      Name = '1_code_p'
+      Description = #44277#53685#53076#46300'_P'
+      Code.Strings = (
+        'SELECT * FROM TBCO_COMMONCODE_I'
+        'WHERE GROUP_CL = '#39'ROOT'#39
+        '  AND CMMN_CL = '#39'MT068'#39';')
+    end
+    item
+      Name = '1_code_c'
+      Description = #44277#53685#53076#46300'_c'
+      Code.Strings = (
+        'SELECT * FROM TBCO_COMMONCODE_I'
+        'WHERE 1=1'
+        '  AND GROUP_CL = '#39'MT068'#39
+        '  --AND CMMN_CL_NM LIKE '#39'%%'#39
+        '  ;')
+    end
+    item
+      Name = '1_inst_chg'
+      Description = #44592#44288#48708#48128#48264#54840#48320#44221
+      Code.Strings = (
+        '-- '#54924#50896#51312#54924
+        'SELECT A.INST_CD, A.*'
+        '  FROM TBMT_MEMBER_M A'
+        ' WHERE A.MBER_SNO = '#39'0029300'#39
+        ';'
+        ''
+        '-- '#44592#44288#45812#45817#51088#51312#54924
+        'SELECT * '
+        '  FROM TBMT_INSTCHARGER_M    -- ['#44277#51228']'#44592#44288#45812#45817#51088#44288#47532' '
+        ' WHERE INST_CD = '#39'000010'#39
+        '   AND USE_YN = '#39'1'#39
+        ';'
+        ''
+        '-- '#44592#44288#45812#45817#51088' '#48708#48128#48264#54840' '#48320#44221
+        'UPDATE TBMT_INSTCHARGER_M_DAMO    -- ['#44277#51228']'#44592#44288#45812#45817#51088#44288#47532
+        '   SET CHRG_PASSWD = DAMO.HASH_STR_DATA('#39'1'#39')  '
+        ' WHERE INST_CD = '#39'000010'#39
+        '   AND USE_YN = '#39'1'#39
+        ';')
+    end
+    item
+      Name = '1_mem_chg'
+      Description = #54924#50896#48708#48128#48264#54840#48320#44221
+      Code.Strings = (
+        '-- '#54924#50896#51312#54924
+        'SELECT *'
+        '  FROM TBMT_MEMBER_M '
+        ' WHERE MBER_SNO = '#39'0029300'#39
+        ';'
+        ''
+        '-- '#54924#50896#44228#51221#51312#54924
+        'SELECT * '
+        '  FROM TBMT_MEMBERACCOUNT_M    -- ['#44277#51228']'#54924#50896#44228#51221#44288#47532' '
+        ' WHERE MBER_SNO = '#39'0029300'#39
+        '   AND USE_YN = '#39'1'#39
+        ';'
+        ''
+        '-- '#54924#50896' '#48708#48128#48264#54840' '#48320#44221
+        'UPDATE TBMT_MEMBERACCOUNT_M    -- ['#44277#51228']'#54924#50896#44228#51221#44288#47532
+        '   SET MBER_PASSWD = DAMO.HASH_STR_DATA('#39'1'#39')  '
+        ' WHERE MBER_SNO = '#39'0029300'#39
+        '   AND USE_YN = '#39'1'#39
+        ';')
+    end
+    item
+      Name = '1_interestrate'
+      Description = #51648#44553#47456
+      Code.Strings = (
+        'SELECT S.INTR_RT'
+        '  FROM TBMT_INTERESTRATE_I S'
+        ' WHERE S.SALARY_KIND_CD = '#39'9901'#39
+        '   AND '#39'20191231'#39' BETWEEN S.APL_STR_YMD AND S.APL_END_YMD'
+        '   AND S.USE_YN = '#39'1'#39)
+    end
+    item
+      Name = '1_TBFI_SUSACNTAMT_M'
+      Description = '['#54924#44228']'#44032#44228#51221#44552#50529#44288#47532
+      Code.Strings = (
+        'SELECT COMP_CD AS "'#54924#49324#53076#46300'"'
+        '    , SUSACNT_AMT_SNO AS "'#44032#44228#51221#44552#50529#51068#47144#48264#54840'"'
+        '    , SUSACNT_DIV_CD AS "'#44032#44228#51221#44396#48516#53076#46300'"'
+        '    , ACCOUNT_CHITNO AS "'#54924#44228#51204#54364#48264#54840'"'
+        '    , CHIT_ROWS_NO AS "'#51204#54364#54665#48264#54840'"'
+        '    , OCRNC_AMT AS "'#48156#49373#44552#50529'"'
+        '    , DECSION_PREC_AMT AS "'#44208#51032#44032#51221#49328#44552#50529'"'
+        '    , CHIT_PREC_AMT AS "'#51204#54364#44032#51221#49328#44552#50529'"'
+        '    , EXCCLC_AMT AS "'#51221#49328#44552#50529'"'
+        '    , EXCCLC_CPLT_YMD AS "'#51221#49328#50756#47308#51068#51088'"'
+        '    , CREAT_YMD AS "'#49373#49457#51068#51088'"'
+        '    , RCPPAY_SNO AS "'#51077#52636#44552#51068#47144#48264#54840'"'
+        '    , MANAGE_BRFFC_CD AS "'#44288#47532#51648#49324#53076#46300'"'
+        '    , MANAGE_DEPT_CD AS "'#44288#47532#48512#49436#53076#46300'"'
+        '    , REG_DATE AS "'#46321#47197#51068#49884'"'
+        '    , REG_ID AS "'#46321#47197'ID"'
+        '    , UPD_DATE AS "'#49688#51221#51068#49884'"'
+        '    , UPD_ID AS "'#49688#51221'ID"'
+        '    , A.OCRNC_AMT - A.DECSION_PREC_AMT'
+        '    - A.CHIT_PREC_AMT - 0 AS BAL_AMT /*'#51092#50529#52404#53356' '#44208#51032#49436'I/F : '#44032#44228#51221#44552#50529#44288#47532'*/'
+        'FROM TBFI_SUSACNTAMT_M A -- ['#54924#44228']'#44032#44228#51221#44552#50529#44288#47532
+        'WHERE 1=1 '
+        '--AND SUSACNT_AMT_SNO IN ('#39'2020022000223'#39') '
+        '--AND RCPPAY_SNO = '#39'2020042400413'#39'   '
+        '--AND RCPPAY_SNO = '#39'2019082800148'#39'  -- 2019082800147'
+        '--AND ACCOUNT_CHITNO = '#39'AC20200225-000000074'#39)
+    end
+    item
+      Name = '1_TBMT_SUSPENSERECEIPT_M'
+      Description = '['#44277#51228']'#44032#49688#44552#44288#47532
+      Code.Strings = (
+        'SELECT  RCPPAY_ID AS "'#51077#52636#44552'ID"'
+        '        , REF_SNO AS "'#52280#51312#51068#47144#48264#54840'"'
+        '        , SUSRCIP_MNGNO AS "'#44032#49688#44552#44288#47532#48264#54840'"'
+        '        , SUSRCIP_DIV_CD AS "'#44032#49688#44552#44396#48516#53076#46300'"'
+        
+          '        , CASE SUSRCIP_DIV_CD WHEN '#39'40'#39' THEN '#39#49440#49688#44552'('#51201#47549#54805') - '#44032#49345#44228#51340#39' E' +
+          'ND AS "'#44032#49688#44552#44396#48516'"'
+        '        , SUSRCIP_SNO AS "'#44032#49688#44552#51068#47144#48264#54840'"'
+        '        , SUSRCIP_AMT AS "'#44032#49688#44552#44552#50529'"'
+        '        , MBER_SNO AS "'#54924#50896#51068#47144#48264#54840'"'
+        '        , REG_DATE AS "'#46321#47197#51068#49884'"'
+        '        , REG_ID AS "'#46321#47197'ID"'
+        '        , UPD_DATE AS "'#49688#51221#51068#49884'"'
+        '        , UPD_ID AS "'#49688#51221'ID"'
+        
+          '        , SUM(SUSRCIP_AMT) OVER( PARTITION BY REF_SNO ) AS SUSRC' +
+          'IP_AMT_SUM'
+        'FROM TBMT_SUSPENSERECEIPT_M A -- ['#44277#51228']'#44032#49688#44552#44288#47532
+        ' WHERE 1=1'
+        '   AND REF_SNO   = '#39'000280'#39
+        '   AND SUSRCIP_DIV_CD = '#39'40'#39
+        '   AND RCPPAY_ID  LIKE '#39'202006%'#39
+        '   '
+        '--   AND RCPPAY_ID IN ('
+        '--                    SELECT X.RCPPAY_ID'
+        '--                    FROM TBMT_PAIDPAYMENT_M X -- ['#44277#51228']'#51077#52636#44552#44288#47532
+        '--                     WHERE X.INST_CD = A.REF_SNO'
+        
+          '--                       AND X.RCPPAY_YMD >= TO_DATE('#39'20191005'#39')' +
+          ' '
+        '--                    )'
+        '--AND SUSRCIP_SNO = '#39'2019103000168'#39
+        'AND RCPPAY_ID  = '#39'20200625000000000531'#39
+        'ORDER BY RCPPAY_ID, REF_SNO, TO_NUMBER(SUSRCIP_MNGNO)'
+        ';')
+    end
+    item
+      Name = '1_cms'
+      Description = #51077#44552#54869#51064
+      Code.Strings = (
+        '-- '#9618#9618#9618#9618#9618#9618#9618#9618#9618#9618#9618' 1.  '#44032#49688#44552', '#51077#44552#50696#51221#44552#50529' '#51216#44160' '
+        'SELECT *    --'
+        '  FROM WCMS_ERP_VIRA05  --[WINCMS]'#44032#49345#44228#51340#44144#47000#45236#50669' '
+        ' WHERE CMS_NO IN (SELECT VIRACCOUNT_NO '
+        '                    FROM WCMS_ERP_VIRA01 --[WINCMS]'#44032#49345#44228#51340#49688#45225#51221#48372#46321#47197' '
+        '                   WHERE ERP_KEY LIKE '#39'_000300202007'#39
+        '                 ) '
+        '   AND TRNX_DATE LIKE '#39'202007%'#39
+        ';'
+        ''
+        ''
+        'SELECT * -- 2019042800205'
+        '  FROM TBFI_SUSACNTAMT_M   --['#54924#44228']'#44032#44228#51221#44552#50529#44288#47532' '
+        ' WHERE RCPPAY_SNO IN (SELECT RCPPAY_SNO '
+        '                        FROM TBFI_RCPPAY_M_DAMO   --['#54924#44228']'#51077#52636#44552#44288#47532' '
+        '                       WHERE ETC_7_CONT LIKE '#39'_000300202007'#39')'
+        '                       ;'
+        '                       '
+        '                       '
+        '-- '#44032#49688#44552#44288#47532
+        'SELECT  RCPPAY_ID AS "'#51077#52636#44552'ID"'
+        '        , REF_SNO AS "'#52280#51312#51068#47144#48264#54840'"'
+        '        , SUSRCIP_MNGNO AS "'#44032#49688#44552#44288#47532#48264#54840'"'
+        '        , SUSRCIP_DIV_CD AS "'#44032#49688#44552#44396#48516#53076#46300'"'
+        
+          '        , CASE SUSRCIP_DIV_CD WHEN '#39'40'#39' THEN '#39#49440#49688#44552'('#51201#47549#54805') - '#44032#49345#44228#51340#39' E' +
+          'ND AS "'#44032#49688#44552#44396#48516'"'
+        '        , SUSRCIP_SNO AS "'#44032#49688#44552#51068#47144#48264#54840'"'
+        '        , SUSRCIP_AMT AS "'#44032#49688#44552#44552#50529'"'
+        '        , MBER_SNO AS "'#54924#50896#51068#47144#48264#54840'"'
+        '        , REG_DATE AS "'#46321#47197#51068#49884'"'
+        '        , REG_ID AS "'#46321#47197'ID"'
+        '        , UPD_DATE AS "'#49688#51221#51068#49884'"'
+        '        , UPD_ID AS "'#49688#51221'ID"'
+        
+          '        , SUM(SUSRCIP_AMT) OVER( PARTITION BY REF_SNO ) AS SUSRC' +
+          'IP_AMT_SUM'
+        'FROM TBMT_SUSPENSERECEIPT_M A -- ['#44277#51228']'#44032#49688#44552#44288#47532
+        ' WHERE 1=1'
+        '   AND REF_SNO   = '#39'000300'#39
+        '   AND SUSRCIP_DIV_CD = '#39'40'#39
+        '   AND RCPPAY_ID  LIKE '#39'202007%'#39
+        '   ;'
+        '   '
+        '   '
+        '-- ['#44277#51228']'#51201#47549#49688#45225#54924#44228#47588#54609#51221#48372
+        'SELECT * FROM TBMT_ACCMTRCPPAY_M'
+        ' WHERE INST_CD = '#39'000300'#39
+        '--   AND COM_IND_FLAG = '#39'C'#39
+        '   AND USE_YN = '#39'1'#39
+        '   AND RCIV_CLOSE_YM = '#39'202007'#39
+        '   ;'
+        '   '
+        '   '
+        '-- ['#44277#51228']'#51077#52636#44552#44288#47532
+        'SELECT * FROM TBMT_PAIDPAYMENT_M'
+        'WHERE INST_CD = '#39'000300'#39
+        '  AND RCPPAY_YMD > '#39'202007'#39
+        '  AND RCPPAY_DIV_CD = '#39'I'#39
+        '  ;'
+        '  '
+        '  '
+        'SELECT SUM(NOW_ALOTM_AMT)'
+        'FROM TBMT_ACCMTPAID_M  --['#44277#51228']'#51201#47549#54805#44553#50668#45225#51077#44288#47532
+        ' WHERE 1=1'
+        '   AND PAID_YMD   >= '#39'20200701'#39
+        '   AND inst_cd = '#39'000300'#39
+        '--   AND PAID_SNO   = '#39'1'#39
+        ';')
+    end
+    item
+      Name = '1_INDVACCOUNT'
+      Description = 'CMS'#45225#51077'_'#44060#48324#44032#51077#51088#44228#51340
+      Code.Strings = (
+        'SELECT * FROM TBMT_MEMBER_M'
+        'WHERE 1=1'
+        '  AND MBER_SNO = '#39'0009460'#39
+        ';'
+        ''
+        ''
+        '-- 1. '#54924#50896#51221#48372' '#48320#44221' '
+        'UPDATE TBMT_MEMBER_M   --['#44277#51228']'#54924#50896#44288#47532
+        '   SET GIRO_CHECK_YN = '#39'1'#39' --'#51648#47196#52404#53356#50668#48512
+        '     , UPD_ID        = '#39'10090'#39
+        '     , UPD_DATE      = SYSDATE '
+        ' WHERE 1=1'
+        '   AND MBER_SNO = '#39'0009460'#39' '
+        ';'
+        ''
+        ''
+        'INSERT INTO TBMT_MEMBER_H  --['#44277#51228']'#54924#50896#44288#47532#51060#47141' '
+        '('
+        '       MBER_SNO           --'#54924#50896#51068#47144#48264#54840
+        '     , PRG_DATE           --'#52376#47532#51068#51088' '
+        '     , MBER_NM            --'#54924#50896#47749
+        '     , MBER_ENG_NM        --'#54924#50896#50689#47928#47749
+        '     , ACCMT_MBER_STAT_CD --'#51201#47549#54924#50896#49345#53468#53076#46300
+        '     , MBER_INHBT_REGNO   --'#54924#50896#51452#48124#46321#47197#48264#54840
+        '     , EMAIL_ADDR         --'#51060#47700#51068#51452#49548
+        '     , HOME_ZIPNO         --'#51088#53469#50864#54200#48264#54840
+        '     , HOME_ZIPNO_ADDR    --'#51088#53469#50864#54200#48264#54840#51452#49548
+        '     , HOME_DETAIL_ADDR   --'#51088#53469#49345#49464#51452#49548
+        '     , HOME_TEL_ARNO      --'#51088#53469#51204#54868#51648#50669#44397#48264
+        '     , HOME_TEL_THNO      --'#51088#53469#51204#54868#44397#48264#54840
+        '     , HOME_TEL_SNO       --'#51088#53469#51204#54868#51068#47144#48264#54840
+        '     , WRC_ZIPNO          --'#51649#51109#50864#54200#48264#54840
+        '     , WRC_ZIPNO_ADDR     --'#51649#51109#50864#54200#48264#54840#51452#49548
+        '     , WRC_DETAIL_ADDR    --'#51649#51109#49345#49464#51452#49548
+        '     , WRC_TEL_ARNO       --'#51649#51109#51204#54868#51648#50669#44397#48264
+        '     , WRC_TEL_THNO       --'#51649#51109#51204#54868#44397#48264#54840
+        '     , WRC_TEL_SNO        --'#51649#51109#51204#54868#51068#47144#48264#54840
+        '     , WRC_INNO           --'#51649#51109#45236#49440#48264#54840
+        '     , MBTL_TEL_ARNO      --'#55092#45824#54256#51204#54868#51648#50669#44397#48264
+        '     , MBTL_TEL_THNO      --'#55092#45824#54256#51204#54868#44397#48264#54840
+        '     , MBTL_TEL_SNO       --'#55092#45824#54256#51204#54868#51068#47144#48264#54840
+        '     , CNTRCT_DIV_CD      --'#44228#50557#44396#48516#53076#46300
+        '     , LAST_LOGIN_DATE    --'#52572#51333#47196#44536#51064#51068#49884
+        '     , RTRM_MBER_STAT_CD  --'#53748#51649#54924#50896#49345#53468#53076#46300
+        '     , LSMB_SRB_STAT_CD   --'#47785#46024#44553#50668#44032#51077#49345#53468#53076#46300
+        '     , INDV_SRB_STAT_CD   --'#44060#48324#44032#51077#49345#53468#53076#46300
+        '     , GIRO_CHECK_YN      --'#51648#47196#52404#53356#50668#48512
+        '     , MBER_DIV_CD        --'#54924#50896#44396#48516#53076#46300
+        '     , SRB_YMD            --'#44032#51077#51068#51088
+        '     , SECSN_YMD          --'#53448#53748#51068#51088
+        '     , MVT_YMD            --'#51204#52636#51068#51088
+        '     , INST_CD            --'#44592#44288#53076#46300
+        '     , DEPT_NM            --'#48512#49436#47749
+        '     , CLSF_NM            --'#51649#44553#47749
+        '     , RSPOFC_NM          --'#51649#52293#47749
+        '     , NTFRGN_DIV_CD      --'#45236#50808#44397#51064#44396#48516#53076#46300
+        '     , MBER_CHECK_YN      --'#54924#50896#52404#53356#50668#48512
+        '     , REG_DATE           --'#46321#47197#51068#49884
+        '     , REG_ID             --'#46321#47197'ID'
+        '     , UPD_DATE           --'#49688#51221#51068#49884
+        '     , UPD_ID             --'#49688#51221'ID'
+        ')'
+        'SELECT '
+        '       MBER_SNO           --'#54924#50896#51068#47144#48264#54840
+        '     , SYSDATE            --'#52376#47532#51068#51088' '
+        '     , MBER_NM            --'#54924#50896#47749
+        '     , MBER_ENG_NM        --'#54924#50896#50689#47928#47749
+        '     , ACCMT_MBER_STAT_CD --'#51201#47549#54924#50896#49345#53468#53076#46300
+        '     , MBER_INHBT_REGNO   --'#54924#50896#51452#48124#46321#47197#48264#54840
+        '     , EMAIL_ADDR         --'#51060#47700#51068#51452#49548
+        '     , HOME_ZIPNO         --'#51088#53469#50864#54200#48264#54840
+        '     , HOME_ZIPNO_ADDR    --'#51088#53469#50864#54200#48264#54840#51452#49548
+        '     , HOME_DETAIL_ADDR   --'#51088#53469#49345#49464#51452#49548
+        '     , HOME_TEL_ARNO      --'#51088#53469#51204#54868#51648#50669#44397#48264
+        '     , HOME_TEL_THNO      --'#51088#53469#51204#54868#44397#48264#54840
+        '     , HOME_TEL_SNO       --'#51088#53469#51204#54868#51068#47144#48264#54840
+        '     , WRC_ZIPNO          --'#51649#51109#50864#54200#48264#54840
+        '     , WRC_ZIPNO_ADDR     --'#51649#51109#50864#54200#48264#54840#51452#49548
+        '     , WRC_DETAIL_ADDR    --'#51649#51109#49345#49464#51452#49548
+        '     , WRC_TEL_ARNO       --'#51649#51109#51204#54868#51648#50669#44397#48264
+        '     , WRC_TEL_THNO       --'#51649#51109#51204#54868#44397#48264#54840
+        '     , WRC_TEL_SNO        --'#51649#51109#51204#54868#51068#47144#48264#54840
+        '     , WRC_INNO           --'#51649#51109#45236#49440#48264#54840
+        '     , MBTL_TEL_ARNO      --'#55092#45824#54256#51204#54868#51648#50669#44397#48264
+        '     , MBTL_TEL_THNO      --'#55092#45824#54256#51204#54868#44397#48264#54840
+        '     , MBTL_TEL_SNO       --'#55092#45824#54256#51204#54868#51068#47144#48264#54840
+        '     , CNTRCT_DIV_CD      --'#44228#50557#44396#48516#53076#46300
+        '     , LAST_LOGIN_DATE    --'#52572#51333#47196#44536#51064#51068#49884
+        '     , RTRM_MBER_STAT_CD  --'#53748#51649#54924#50896#49345#53468#53076#46300
+        '     , LSMB_SRB_STAT_CD   --'#47785#46024#44553#50668#44032#51077#49345#53468#53076#46300
+        '     , INDV_SRB_STAT_CD   --'#44060#48324#44032#51077#49345#53468#53076#46300
+        '     , GIRO_CHECK_YN      --'#51648#47196#52404#53356#50668#48512
+        '     , MBER_DIV_CD        --'#54924#50896#44396#48516#53076#46300
+        '     , SRB_YMD            --'#44032#51077#51068#51088
+        '     , SECSN_YMD          --'#53448#53748#51068#51088
+        '     , MVT_YMD            --'#51204#52636#51068#51088
+        '     , INST_CD            --'#44592#44288#53076#46300
+        '     , DEPT_NM            --'#48512#49436#47749
+        '     , CLSF_NM            --'#51649#44553#47749
+        '     , RSPOFC_NM          --'#51649#52293#47749
+        '     , NTFRGN_DIV_CD      --'#45236#50808#44397#51064#44396#48516#53076#46300
+        '     , MBER_CHECK_YN      --'#54924#50896#52404#53356#50668#48512
+        '     , REG_DATE           --'#46321#47197#51068#49884
+        '     , REG_ID             --'#46321#47197'ID'
+        '     , UPD_DATE           --'#49688#51221#51068#49884
+        '     , UPD_ID             --'#49688#51221'ID'
+        '  FROM TBMT_MEMBER_M  --['#44277#51228']'#54924#50896#44288#47532
+        ' WHERE 1=1'
+        '   AND MBER_SNO = '#39'0009460'#39
+        '; '
+        ''
+        ''
+        'SELECT *'
+        '  FROM TBMT_ACCMTCONTRACT_M  --['#44277#51228']'#51201#47549#54805#44553#50668#44228#50557#44288#47532
+        ' WHERE 1=1'
+        '   AND MBER_SNO = '#39'0009460'#39
+        '; '
+        ''
+        ''
+        'SELECT * FROM  TBCO_CMS_WD_AGREE_M -- ['#44277#53685']CMS'#52636#44552#46041#51032#51221#48372
+        'WHERE MBER_SNO = '#39'0009460'#39
+        'AND RESULT_CD = '#39'0000'#39
+        ';'
+        ''
+        ''
+        'SELECT *'
+        'FROM TBMT_INDVACCOUNT_M_DAMO A -- ['#44277#51228']'#44060#48324#44032#51077#51088#44228#51340#44288#47532
+        ' WHERE 1=1'
+        '  AND A.MBER_SNO = '#39'0009460'#39
+        ';'
+        ''
+        ''
+        'INSERT INTO TBMT_INDVACCOUNT_M  --['#44277#51228']'#44060#48324#44032#51077#51088#44228#51340#44288#47532
+        '('
+        '  RQS_SNO      --'#49888#52397#51068#47144#48264#54840
+        ', ACNUT_DIV_CD --'#44228#51340#44396#48516#53076#46300
+        ', SRB_EDYCNO   --'#44032#51077#51613#49436#48264#54840
+        ', MBER_SNO     --'#54924#50896#51068#47144#48264#54840
+        ', RQS_BANK_CD  --'#49888#52397#51008#54665#53076#46300
+        ', RQS_BANK_NM  --'#49888#52397#51008#54665#47749
+        ', RQS_ACNO     --'#49888#52397#44228#51340#48264#54840
+        ', RQS_DPSR_NM  --'#49888#52397#50696#44552#51452#47749
+        ', INST_CD      --'#44592#44288#53076#46300
+        ', INST_NM      --'#44592#44288#47749
+        ', CONFM_YN     --'#49849#51064#50668#48512
+        ', REG_DATE     --'#46321#47197#51068#49884
+        ', REG_ID       --'#46321#47197'ID'
+        ', UPD_DATE     --'#49688#51221#51068#49884
+        ', UPD_ID       --'#49688#51221'ID'
+        ') '
+        'VALUES '
+        '( '
+        ' (SELECT NVL(MAX(TO_NUMBER(RQS_SNO)),0) + 1 AS MAX '
+        '    FROM TBMT_INDVACCOUNT_M  --['#44277#51228']'#44060#48324#44032#51077#51088#44228#51340#44288#47532
+        ' )  --'#49888#52397#51068#47144#48264#54840
+        ', '#39'2'#39'               --'#44228#51340#44396#48516#53076#46300
+        ', '#39'100000009460001'#39' --'#44032#51077#51613#49436#48264#54840
+        ', '#39'0009460'#39'         --'#54924#50896#51068#47144#48264#54840
+        ', '#39'004'#39'             --'#49888#52397#51008#54665#53076#46300
+        ', '#39#44397#48124#51008#54665#39'            --'#49888#52397#51008#54665#47749
+        ', '#39'92030201014104'#39'   --'#49888#52397#44228#51340#48264#54840
+        ', '#39#51076#49457#52384#39'             --'#49888#52397#50696#44552#51452#47749' '
+        ', '#39'999999'#39'          --'#44592#44288#53076#46300
+        ', '#39#44060#48324#54924#50896#44536#47353#39'          --'#44592#44288#47749
+        ', '#39'1'#39'               --'#49849#51064#50668#48512
+        ', SYSDATE           --'#46321#47197#51068#49884
+        ', '#39'10090'#39'           --'#46321#47197'ID'
+        ', SYSDATE           --'#49688#51221#51068#49884
+        ', '#39'10090'#39'           --'#49688#51221'ID'
+        ');')
+    end
+    item
+      Name = '2_batch_result'
+      Description = #48176#52824#44208#44284#51312#54924
+      Code.Strings = (
+        'SELECT A.SN'
+        '     , A.BATCH_NM'
+        '     , A.PROGRM_NM'
+        '     , B.CMMN_CL_NM EXECUT_STTUS'
+        '     , A.ERR_MSG'
+        
+          '     , TO_CHAR (A.EXECUT_BEGIN_DE, '#39'YYYY-MM-DD HH24:MI:SS'#39') AS E' +
+          'XECUT_BEGIN_DE'
+        
+          '     , TO_CHAR (A.EXECUT_END_DE, '#39'YYYY-MM-DD HH24:MI:SS'#39') AS EXE' +
+          'CUT_END_DE'
+        '     , TO_CHAR (A.EXECUT_BEGIN_DE, '#39'YYYY-MM-DD'#39') AS EXECUT_DE'
+        
+          '     , TO_CHAR (A.NEXT_EXECUT_DE, '#39'YYYY-MM-DD HH24:MI:SS'#39') AS NE' +
+          'XT_EXECUT_DE'
+        '     , DECODE (A.NEXT_EXECUT_DE, NULL, '#39#49688#46041#39', '#39#49828#52992#51572#39') AS EXECUT_TY'
+        '     , COUNT (A.SN) OVER (PARTITION BY 1) AS CNT'
+        '  FROM TBCO_BATCH_RESULT A'
+        '     , TBCO_COMMONCODE_I B'
+        ' WHERE A.EXECUT_STTUS = B.CMMN_CL'
+        '   AND B.GROUP_CL = '#39'CO010'#39
+        '   AND A.EXECUT_BEGIN_DE '
+        
+          '        BETWEEN TO_DATE(TO_CHAR(SYSDATE, '#39'YYYYMMDD'#39') || '#39'000000'#39 +
+          ', '#39'YYYYMMDDHH24MISS'#39') - 5'
+        
+          '            AND TO_DATE(TO_CHAR(SYSDATE, '#39'YYYYMMDD'#39') || '#39'235959'#39 +
+          ', '#39'YYYYMMDDHH24MISS'#39')'
+        '--   AND A.BATCH_NM = '#39#51201#47549#54805' '#44032#49345#44228#51340' '#51077#44552' '#52376#47532#54980' '#54980#49549#52376#47532' '#48176#52824#39
+        '--   AND A.BATCH_NM LIKE '#39'%'#39' || '#39#51201#47549#54805' '#44032#49345#44228#51340#39' || '#39'%'#39
+        '   AND A.PROGRM_NM = '#39'accmtBatchJobDetail'#39
+        'ORDER BY A.EXECUT_BEGIN_DE DESC')
+      Advanced = True
+    end
+    item
+      Name = '2_vira_org'
+      Description = #44032#49345#44228#51340#50724#54536'_'#44592#44288
+      Code.Strings = (
+        '-- '#44592#44288#51032' '#44032#49345#44228#51340' '#54869#51064
+        'SELECT INST_CD, INST_KOR_NM, VIR_ACCT_NO'
+        '  FROM TBMT_INSTMEMBER_M'
+        ' WHERE INST_CD = '#39'004300'#39
+        ' ;'
+        ' '
+        '--'#44228#51340' '#50724#54536#54869#51064'  '
+        'SELECT RESULT_CODE, A.* '
+        '  FROM WCMS_ERP_VIRA01 A  '
+        ' WHERE 1=1 '
+        '   AND TRNX_START_DATE >= '#39'20200801'#39' '
+        '   AND VIRACCOUNT_NO    = (SELECT VIR_ACCT_NO '
+        '                             FROM TBMT_INSTMEMBER_M'
+        '                            WHERE INST_CD = '#39'004300'#39')'
+        'ORDER BY CREATE_DATE, CREATE_TIME;  '
+        ''
+        '-- '#44032#49345#44228#51340' '#50724#54536' '
+        
+          '    v_customer_key  IN  VARCHAR2                          /* '#54924#50896#48264 +
+          #54840' */ 2208205643'#47196' '#44256#51221
+        
+          '   ,v_customer_name IN  VARCHAR2                          '#44592#44288#47749' '#46608#45716 +
+          ' '#44060#51064#51068#44221#50864' '#44256#44061#47749#51012' '#51077#47141#54632
+        
+          '                                                          /* '#44060#48324#45225 +
+          #48512', '#44592#44288' '#44396#48516' '#53076#46300' ('#44060#48324#45225#48512#51088' '#48120#45225#53076#46300' '#52628#44032') I:'#44060#48324'('#55092#51649#45225#51077'), E:'#44592#53440' '#44060#48324#45225#51077#51088', C:'#44592#44288', N:'#44060#48324#48120#45225 +
+          #51088', L :'#55092#51649#45225#51077#51088#52376#47532#49884' '#44032#49345#44228#51340#48264#54840' '#50508#47140#51452#44592' '#50948#54644#49436' '#52628#44032' */    '
+        
+          '   ,v_vira_key      IN  VARCHAR2                          /* '#51201#47549#54805 +
+          ' '#44032#49345#44228#51340' KEY (C001140201711)   */ '#44592#44288#51068#44221#50864'(C), '#44060#51064#51068#44221#50864'(I OR E) + '#44592#44288#53076#46300'(6'#51088 +
+          #47532')+'#47560#44048#45380#50900'(6'#51088#47532')'#47196' '#44396#49457
+        
+          '   ,v_creator       IN  VARCHAR2                          /* '#49688#51221#50500 +
+          #51060#46356' */'
+        
+          '   ,v_vira_acno     IN  VARCHAR2                          /* '#44032#49345#44228 +
+          #51340#48264#54840'            */'
+        
+          '   ,v_open_day      IN  VARCHAR2                          /* '#44228#51340'O' +
+          'PEN */'
+        
+          '   ,v_close_day     IN  VARCHAR2                          /* '#44228#51340'C' +
+          'LOSE */'
+        
+          '   ,v_condition     IN  VARCHAR2                          /* 1: ' +
+          #49688#45225#44552#50529#47564' '#49688#45225', 3: '#49688#45225#44552#50529#51060#54616' '#49688#45225' */'
+        
+          '   ,v_open_close    IN  VARCHAR2                          /* D: ' +
+          #46321#47197', C: '#54644#51648' */'
+        '   ,v_amount        IN  VARCHAR2'
+        ';'
+        ''
+        ''
+        
+          '--EXEC SP_VIRA_CHANGE_STATUS('#39'2208205643'#39', '#39#44592#44288#47749#39', '#39'C'#44592#44288#53076#46300#47560#44048#50900#39', '#39'1' +
+          '0090'#39', '#39#44032#49345#44228#51340#39', '#39#50724#54536#51068#39', '#39#51333#47308#51068#39', '#39'3'#39', '#39'C'#39', '#39#47560#44048#44552#50529#39');'
+        ''
+        '-- '#51060#51204' '#44228#51340#50724#54536' '#45803#51020
+        
+          'EXEC SP_VIRA_CHANGE_STATUS('#39'2208205643'#39', '#39'('#51116')'#54252#54637#44552#49549#49548#51116#49328#50629#51652#55141#50896#39', '#39'C004' +
+          '300202005'#39', '#39'10090'#39', '#39'27685327518492'#39', '#39'20200507'#39', '#39'20200514'#39', '#39 +
+          '3'#39', '#39'C'#39', '#39'4600000'#39');'
+        ''
+        '-- '#49888#44508' '#50724#54536
+        
+          'EXEC SP_VIRA_CHANGE_STATUS('#39'2208205643'#39', '#39'('#51116')'#54252#54637#44552#49549#49548#51116#49328#50629#51652#55141#50896#39', '#39'C004' +
+          '300202005'#39', '#39'10090'#39', '#39'27685327518492'#39', '#39'20200507'#39', '#39'20200515'#39', '#39 +
+          '3'#39', '#39'D'#39', '#39'4600000'#39');'
+        ''
+        '--'#54532#47196#49884#51256' '#54840#52636' '#54980' '#52964#48139'!! 3'#48516' '#46244' RESULT_CODE '#54869#51064' '#54980' SMS'#48156#49569
+        ''
+        ''
+        '-- SMS'#47928#51088' '#51204#49569
+        
+          '    v_vira_div_cd        IN  VARCHAR2                          /' +
+          '* '#44032#49345#44228#51340#50629#47924#44396#48516'(MT071)   */'
+        
+          '   ,v_com_ind_flag       IN  VARCHAR2                          /' +
+          '* '#44060#48324#45225#48512', '#44592#44288' '#44396#48516' '#53076#46300' ('#44060#48324#45225#48512#51088' '#48120#45225#53076#46300' '#52628#44032') I:'#44060#48324'('#55092#51649#45225#51077'), E:'#44592#53440' '#44060#48324#45225#51077#51088', C:'#44592#44288', N' +
+          ':'#44060#48324#48120#45225#51088', L :'#55092#51649#45225#51077#51088#52376#47532#49884' '#44032#49345#44228#51340#48264#54840' '#50508#47140#51452#44592' '#50948#54644#49436' '#52628#44032' */'
+        
+          '   ,v_mber_sno           IN  VARCHAR2                          /' +
+          '* '#54924#50896#48264#54840'                 */'
+        
+          '   ,v_srb_edycno         IN  VARCHAR2                          /' +
+          '* '#44228#50557#48264#54840' or '#44032#51077#48264#54840'      */'
+        
+          '   ,v_inst_cd            IN  VARCHAR2                           ' +
+          '/* '#44592#44288#53076#46300'                 */   '
+        
+          '   ,v_accmt_amt          IN  VARCHAR2                           ' +
+          ' /* '#45225#51077' '#44552#50529'                */'
+        
+          '   ,v_schedule_type      IN  VARCHAR2                          /' +
+          '* '#47700#49464#51648#51204#49569#48169#49885' ( 0 : '#51593#49884', 1 : '#50696#50557' ) */   '
+        
+          '   ,v_send_delay_minute  IN  NUMBER                            /' +
+          '* '#47700#49464#51648#51204#49569#51648#50672' '#49884#44036' ('#48516')  */'
+        
+          '   ,v_rciv_close_ym      IN  VARCHAR2                           ' +
+          ' /* '#49688#45225#47560#44048#50900' */   '
+        ';'
+        ''
+        '-- '#44592#44288#53076#46300','#45225#51077#44552#50529','#47560#44048#50900#47564' '#49688#51221
+        
+          'EXEC SP_ACCMT_VIRA_SEND_SMS('#39'01'#39','#39'C'#39','#39'0000000'#39','#39'100000000000001'#39 +
+          ','#39'004300'#39','#39'4600000'#39','#39'0'#39',0,'#39'202005'#39');'
+        ''
+        '-- '#49888#52397
+        'SELECT * FROM KMP_MSG'
+        'WHERE 1=1'
+        'AND SEND_TIME > TRUNC(SYSDATE) '
+        'AND USER3 = '#39'004300'#39' -- '#44060#51064'MBER_SNO '#46608#45716' '#44592#44288'INST_CD'
+        ';'
+        ''
+        '-- '#44208#44284' '#54869#51064
+        'SELECT * FROM KMP_LOG '
+        'WHERE 1=1'
+        'AND REQUEST_TIME > TRUNC(SYSDATE) '
+        'AND USER3 = '#39'004300'#39' -- '#44060#51064'MBER_SNO '#46608#45716' '#44592#44288'INST_CD')
+    end
+    item
+      Name = '3_decsion'
+      Description = #44208#51032#49436#49345#49888
+      Code.Strings = (
+        ' -- '#48512#45812#44552' '#44552#50529'   '
+        'SELECT * FROM TBMT_PAIDPAYMENT_M    -- ['#44277#51228']'#51077#52636#44552#44288#47532
+        'WHERE inst_cd = '#39'000710'#39
+        'AND rcppay_div_cd = '#39'I'#39
+        'AND rcppay_ymd > '#39'202008'#39
+        'AND rcppay_id = '#39'20200825000000000009'#39
+        ';'
+        ''
+        '/* '#44208#51032#49436' '#44032#49688#44552' '#51312#54924' */ '
+        'SELECT  A.RCPPAY_ID /* '#51077#52636#44552'ID */'
+        '  , A.REF_SNO /* '#52280#51312#51068#47144#48264#54840' */'
+        '  , A.SUSRCIP_MNGNO /* '#44032#49688#44552#44288#47532#48264#54840' */'
+        '  , A.SUSRCIP_SNO /* '#44032#49688#44552#51068#47144#48264#54840' */'
+        '  , A.SUSRCIP_DIV_CD /*'#44032#49688#44552' '#44396#48516#53076#46300'*/'
+        
+          '  , CASE WHEN A.SUSRCIP_AMT = B.OCRNC_AMT THEN B.OCRNC_AMT - NVL' +
+          '(B.DECSION_PREC_AMT,0) ELSE 0 END AS SUSRCIP_AMT /* '#44032#49688#44552#44552#50529' */'
+        '  , CASE WHEN A.SUSRCIP_DIV_CD = '#39'1'#39' THEN '#39#44032#49688#44552#39' '
+        '        WHEN  A.SUSRCIP_DIV_CD = '#39'40'#39' THEN '#39#49440#49688#44552'('#51201#47549#54805')'#39
+        '          END AS SUSRCIP_DESC     '
+        '  ,B.DEAL_YMD REG_DATE'
+        '  ,B.VIR_ACCT_NO'
+        '  ,B.DEPOSITOR         '
+        'FROM TBMT_SUSPENSERECEIPT_M A ,'
+        '      (  SELECT '
+        '             CASE '
+        
+          '                /* WHEN A.CMS_MNGNO IS NULL THEN '#39'1005-803-27725' +
+          '9'#39' */ '
+        
+          '                WHEN A.CMS_MNGNO IS NULL THEN A.ACNUT_NO      /*' +
+          ' 201905 '#49688#51221' */'
+        
+          '                WHEN  A.CMS_MNGNO IS NOT NULL THEN  SUBSTR(A.CMS' +
+          '_MNGNO, 1 ,3 ) || '#39'-'#39' || SUBSTR(A.CMS_MNGNO, 4 ,6 ) || '#39'-'#39' ||  S' +
+          'UBSTR(A.CMS_MNGNO, 10 ,2 ) || '#39'-'#39' ||  SUBSTR(A.CMS_MNGNO, 12 ,3 ' +
+          ') '
+        '             END AS VIR_ACCT_NO '
+        '            , A.DEAL_YMD '
+        '            , B.SUSACNT_AMT_SNO '
+        '            , B.OCRNC_AMT        /* '#48156#49373#44552#50529' */'
+        '            , B.DECSION_PREC_AMT /* '#44208#51032#44032#51221#49328#44552#50529' */'
+        '            ,CASE '
+        
+          '                WHEN SUBSTR (A.ETC_7_CONT, 1, 1) = '#39'C'#39'  THEN  ( ' +
+          'SELECT INST_KOR_NM FROM TBMT_INSTMEMBER_M WHERE VIR_ACCT_NO =  A' +
+          '.CMS_MNGNO)'
+        
+          '                WHEN SUBSTR (A.ETC_7_CONT, 1, 1) != '#39'C'#39'  THEN ( ' +
+          'SELECT A.MBER_NM  FROM TBMT_MEMBER_M A, TBMT_ACCMTCONTRACT_M B W' +
+          'HERE A.MBER_SNO = B.MBER_SNO AND B.VIR_ACCT_NO = A.CMS_MNGNO)'
+        
+          '                WHEN A.ETC_7_CONT IS NULL THEN A.BNKB_STATE_CONT' +
+          '  /* 201905 '#52628#44032' */'
+        '             END  DEPOSITOR '
+        '           FROM TBFI_RCPPAY_M A, TBFI_SUSACNTAMT_M B '
+        '           WHERE A.RCPPAY_SNO(+) = B.RCPPAY_SNO  '
+        '             AND A.ACNUT_NO = '#39'1005803277259'#39
+        '             AND B.OCRNC_AMT - NVL(B.DECSION_PREC_AMT,0) > 0'
+        '        ) B'
+        'WHERE  A.SUSRCIP_SNO = B.SUSACNT_AMT_SNO'
+        'AND A.RCPPAY_ID IN'
+        '    ('
+        '            '#39'20200825000000000009'#39
+        '    )'
+        'ORDER BY A.RCPPAY_ID , A.SUSRCIP_MNGNO'
+        ''
+        ''
+        ''
+        '--========= '#44208#51116#50836#52397#50896#48373
+        'SELECT * FROM TBMT_ACCMTRCPPAY_M'
+        'WHERE rciv_close_ym= '#39'202008'#39
+        'AND inst_cd = '#39'000710'#39' '
+        '     '
+        '     '
+        'UPDATE TBMT_ACCMTRCPPAY_M'
+        'set decsion_id = '#39#39
+        'WHERE rciv_close_ym= '#39'202008'#39
+        'AND inst_cd = '#39'000710'#39' '
+        '     '
+        '     '
+        'SELECT * FROM TBFI_SUSACNTAMT_M'
+        
+          'WHERE SUSACNT_AMT_SNO IN (SELECT SUSRCIP_SNO FROM TBMT_ACCMTRCPP' +
+          'AY_M'
+        '         WHERE rciv_close_ym= '#39'202008'#39
+        '         AND inst_cd = '#39'000710'#39' )'
+        ''
+        ''
+        'UPDATE TBFI_SUSACNTAMT_M'
+        '   set DECSION_PREC_AMT = 0'
+        
+          'WHERE SUSACNT_AMT_SNO IN (SELECT SUSRCIP_SNO FROM TBMT_ACCMTRCPP' +
+          'AY_M'
+        '         WHERE rciv_close_ym= '#39'202008'#39
+        '         AND inst_cd = '#39'000710'#39' )')
+      Advanced = True
+    end
+    item
+      Name = '3_payment'
+      Description = #44553#50668#51648#44553#50696#51221#44288#47532
+      Code.Strings = (
+        '--'#44553#50668#51648#44553#50696#51221#44288#47532' '#47785#47197#51312#54924#49884' '#49888#52397#44148#51060' 2'#44060#51064' '#44221#50864' '#51473#48373#51004#47196' '#51312#54924#46108#45796'.'
+        'SELECT '#39'0'#39' AS COMCHK'
+        '      ,'#39'0'#39' AS CHK'
+        '      ,'#39' '#39' AS IMAGE'
+        
+          '      ,A.SRB_EDYCNO                                         /*'#44032#51077 +
+          #51613#49436#48264#54840'*/'
+        
+          '      ,A.NPY_SNO                                            /*'#48120#45225 +
+          #51068#47144#48264#54840'*/'
+        
+          '      ,NVL(B.PYMT_DIV_CD, A.NPY_DIV_CD) AS PYMT_DIV_CD      /*'#48120#45225 +
+          #44396#48516#53076#46300'*/'
+        
+          '      ,A.MBER_SNO                                           /*'#54924#50896 +
+          #48264#54840'*/'
+        
+          '      ,C.MBER_NM                                            /*'#54924#50896 +
+          #47749'*/'
+        
+          '      ,C.MBER_INHBT_REGNO                                   /*'#54924#50896 +
+          #51452#48124#46321#47197#48264#54840'*/'
+        
+          '      ,C.HOME_ZIPNO_ADDR                                    /*'#51088#53469 +
+          #50864#54200#48264#54840' '#51452#49548'*/'
+        
+          '      ,C.HOME_DETAIL_ADDR                                   /*'#51088#53469 +
+          #49345#49464' '#51452#49548'*/'
+        
+          '      ,C.HOME_ZIPNO                                         /*'#51088#53469 +
+          #50864#54200#48264#54840'*/'
+        
+          '      ,C.MBTL_TEL_ARNO                                      /*'#55092#45824 +
+          #54256#51204#54868#51648#50669#44397#48264'*/'
+        
+          '      ,C.MBTL_TEL_THNO                                      /*'#55092#45824 +
+          #54256#51204#54868#44397#48264#54840'*/'
+        
+          '      ,C.MBTL_TEL_SNO                                       /*'#55092#45824 +
+          #54256#51204#54868#51068#47144#48264#54840'*/'
+        
+          '      ,C.ACCMT_MBER_STAT_CD                                 /*'#51201#47549 +
+          #54924#50896#49345#53468#53076#46300'*/'
+        
+          '      ,G.SRB_YMD                                            /*'#44032#51077 +
+          #51068#51088'*/'
+        
+          '      ,NVL(D.INST_KOR_NM, H.INST_KOR_NM) AS INST_KOR_NM     /*'#44592#44288 +
+          #54620#44544#47749'*/'
+        
+          '      ,B.PYMT_YMD                                           /*'#51648#44553 +
+          #51068#51088'*/'
+        
+          '      ,B.RCEPT_YMD                                          /*'#51217#49688 +
+          #51068#51088'*/'
+        
+          '      ,NVL (B.PYMT_STAT_CD, 0) AS PYMT_STAT_CD              /*'#51648#44553 +
+          #49345#53468#53076#46300'*/'
+        
+          '      ,NVL (B.ANNTY_STR_YM, H.ANNTY_STR_YM) AS ANNTY_STR_YM /*'#50672#44552 +
+          #44060#49884#45380#50900'*/'
+        '      ,(SELECT MAX(PAID_YMD) AS PAID_YMD'
+        '          FROM TBMT_ACCMTPAID_M '
+        '         WHERE MBER_SNO   = A.MBER_SNO '
+        '           AND SRB_EDYCNO = A.SRB_EDYCNO '
+        
+          '       ) AS PAID_YMD                                        /*'#52572#51333 +
+          #45225#51077#51068#51088'*/'
+        
+          '      ,LAST_PAID_YMD                                        /*'#53748#51649 +
+          #54644#51648#51068#51088'*/'
+        
+          '      ,LAST_PAID_YMD AS RTRM_YMD                            /*'#53748#51649 +
+          #54644#51648#51068#51088' '#45936#51060#53440#50857'*/'
+        
+          '      ,B.INTR_STD_YMD                                       /*'#51060#51088 +
+          #44592#51456#51068#51088'*/'
+        '      ,(SELECT MAX(PAID_RND_CNT) AS PAID_RND_CNT'
+        '          FROM TBMT_ACCMTPAID_M '
+        '         WHERE MBER_SNO   = A.MBER_SNO'
+        '           AND SRB_EDYCNO = A.SRB_EDYCNO'
+        
+          '       ) AS TOT_PAID_SCNT                                    /*'#52509 +
+          #48520#51077#54943#49688'*/'
+        
+          '      ,NVL(B.TOT_PRNA_AMT,   0) AS TOT_PRNA_AMT              /*'#52509 +
+          #50896#44552#44552#50529'*/'
+        
+          '      ,NVL(B.OCRNC_INTR_AMT, 0) AS OCRNC_INTR_AMT            /*'#48156 +
+          #49373#51060#51088#44552#50529'*/'
+        
+          '      ,NVL(B.PYMT_INTR_AMT,  0) AS PYMT_INTR_AMT             /*'#51648 +
+          #44553#51060#51088#44552#50529'*/'
+        
+          '      ,NVL(B.INCTAX_AMT,     0) AS INCTAX_AMT                /*'#49548 +
+          #46301#49464#44552#50529'*/'
+        
+          '      ,NVL(B.INHBT_TAX_AMT,  0) AS INHBT_TAX_AMT             /*'#51452 +
+          #48124#49464#44552#50529'*/'
+        
+          '      ,NVL(B.GNRL_INTR_AMT,  0) AS GNRL_INTR_AMT             /*'#51068 +
+          #48152#51060#51088#44552#50529'*/'
+        
+          '      ,NVL(B.GNRL_INCTAX_AMT,0) AS GNRL_INCTAX_AMT           /*'#51068 +
+          #48152#49548#46301#49464#44552#50529' */'
+        
+          '      ,NVL(B.GNRL_INHBT_TAX_AMT, 0) AS GNRL_INHBT_TAX_AMT    /*'#51068 +
+          #48152#51452#48124#49464#44552#50529' */'
+        
+          '      ,NVL(B.LSMB_CNVRS_AMT, 0) AS LSMB_CNVRS_AMT            /*'#47785 +
+          #46024#44553#50668#51204#54872#44552#50529'*/'
+        
+          '      ,NVL(B.RRPS_CNVRS_AMT, 0) AS RRPS_CNVRS_AMT            /*'#53748 +
+          #51649#50672#44552#51204#54872#44552#50529'*/'
+        
+          '      ,NVL(B.LND_AMT,        0) AS LND_AMT                   /*'#45824 +
+          #50668#44552#50529'*/'
+        
+          '      ,NVL(PYMT_INTR_AMT + GNRL_INTR_AMT,     0) AS SUM_INTR_AMT' +
+          '       /*'#51060#51088#54633#44228'*/'
+        
+          '      ,NVL(INCTAX_AMT    + GNRL_INCTAX_AMT,   0) AS SUM_INCTAX_A' +
+          'MT     /*'#49548#46301#49464' '#54633#44228'*/'
+        
+          '      ,NVL(INHBT_TAX_AMT + GNRL_INHBT_TAX_AMT,0) AS SUM_INHBT_TA' +
+          'X_AMT  /*'#51452#48124#49464#54633#44228'*/'
+        
+          '      ,NVL(NVL(B.ANNTY_DATE_PYMT_AMT, H.ANNTY_DATE_PYMT_AMT),0) ' +
+          'AS ANNTY_DATE_PYMT_AMT            /*'#51068#49884#44552#51648#44553#50529'*/'
+        
+          '      ,NVL(TOT_PRNA_AMT + PYMT_INTR_AMT + GNRL_INTR_AMT, 0) AS P' +
+          'AY_AMT /*'#51068#49884#44552#44553#50668#44552'*/'
+        '      ,NVL(TOT_PRNA_AMT + PYMT_INTR_AMT + GNRL_INTR_AMT'
+        '       - INCTAX_AMT - INHBT_TAX_AMT - GNRL_INCTAX_AMT'
+        '       - GNRL_INHBT_TAX_AMT - LSMB_CNVRS_AMT - RRPS_CNVRS_AMT '
+        '       - LND_AMT, 0) AS PYMT_AMT /*'#51068#49884#44552#51648#44553#50696#51221#44552#50529'*/'
+        
+          '      ,NVL(TOT_PRNA_AMT + PYMT_INTR_AMT, 0) AS ANNTY_PAY_AMT    ' +
+          '        /*'#50672#44552' '#44553#50668#44552'*/'
+        
+          '       /* 2014 '#50672#44552#51204#54872#44552#50529' 20150222'#51068' AND B.PYMT_YMD < 201502 '#44396#47928' KSP '#52628 +
+          #44032' */'
+        
+          '      , CASE WHEN B.PYMT_YMD  >  '#39'20140401'#39'  AND B.ANNTY_STR_YM ' +
+          ' < '#39'201502'#39
+        '             THEN NVL(TOT_PRNA_AMT + PYMT_INTR_AMT - LND_AMT, 0)'
+        
+          '             ELSE NVL(TOT_PRNA_AMT + PYMT_INTR_AMT - INCTAX_AMT ' +
+          '- INHBT_TAX_AMT - LND_AMT - LSMB_CNVRS_AMT - RRPS_CNVRS_AMT , 0)'
+        '        END AS ANNTY_CNVRS_AMT  /*'#50672#44552#51204#54872#44552#50529'*/'
+        
+          '      , CASE WHEN ( B.PYMT_YMD > '#39'20140401'#39' AND B.ANNTY_STR_YM >' +
+          '= '#39'201405'#39' ) OR ( B.PYMT_YMD < '#39'20140401'#39' OR B.RCEPT_YMD < '#39'2014' +
+          '0401'#39' AND  B.ANNTY_STR_YM >= '#39'201407'#39' )'
+        '             THEN B.ANNTY_STD_PRNA_AMT'
+        
+          '             ELSE NVL (TOT_PRNA_AMT + PYMT_INTR_AMT + GNRL_INTR_' +
+          'AMT  - INCTAX_AMT - INHBT_TAX_AMT - LND_AMT '
+        
+          '                  - GNRL_INCTAX_AMT - GNRL_INHBT_TAX_AMT  - LSMB' +
+          '_CNVRS_AMT - RRPS_CNVRS_AMT , 0)'
+        '        END AS ANNTY_STD_PRNA_AMT /*'#50672#44552#44060#49884#50896#44552'*/'
+        '      ,ANNTY_TRMNAT_DIV_CD'
+        
+          '      ,NVL(B.APPLCNT_NM,    H.APPLCNT_NM)    AS APPLCNT_NM      ' +
+          '                 /*'#49888#52397#51088#47749'*/'
+        
+          '      ,NVL(B.APPLCNT_INHBT_REGNO, H.APPLCNT_INHBT_REGNO) AS APPL' +
+          'CNT_INHBT_REGNO  /*'#49888#52397#51088#51452#48124#46321#47197#48264#54840'*/'
+        
+          '      ,NVL(B.APPLCNT_ZIPNO, H.APPLCNT_ZIPNO) AS APPLCNT_ZIPNO   ' +
+          '                 /*'#49888#52397#51088#50864#54200#48264#54840'*/'
+        
+          '      ,NVL(B.APPLCNT_ZIPNO_ADDR, H.APPLCNT_ZIPNO_ADDR)   AS APPL' +
+          'CNT_ZIPNO_ADDR   /*'#49888#52397#51088#50864#54200#48264#54840#51452#49548'*/'
+        
+          '      ,NVL(B.APPLCNT_DETAIL_ADDR, H.APPLCNT_DETAIL_ADDR) AS APPL' +
+          'CNT_DETAIL_ADDR  /*'#49888#52397#51088#49345#49464#51452#49548'*/'
+        
+          '      ,NVL(B.TEL_ARNO,      H.TEL_ARNO)      AS TEL_ARNO        ' +
+          '    /*'#51204#54868#51648#50669#44397#48264'*/'
+        
+          '      ,NVL(B.TEL_THNO,      H.TEL_THNO)      AS TEL_THNO        ' +
+          '    /*'#51204#54868#44397#48264#54840'*/'
+        
+          '      ,NVL(B.TEL_SNO,       H.TEL_SNO)       AS TEL_SNO         ' +
+          '    /*'#51204#54868#51068#47144#48264#54840'*/'
+        
+          '      ,NVL(B.MBER_APPLCNT_RELATE_NM, H.MBER_APPLCNT_RELATE_NM) A' +
+          'S MBER_APPLCNT_RELATE_NM   /*'#54924#50896#49888#52397#51088#44288#44228#47749'*/'
+        
+          '      ,NVL(B.RCVPT_DPSR_NM, H.RCVPT_DPSR_NM) AS RCVPT_DPSR_NM   ' +
+          '    /*'#49688#47161#50696#44552#51452#47749'*/'
+        
+          '      ,NVL(B.RCVPT_BANK_NM, H.RCVPT_BANK_NM) AS RCVPT_BANK_NM   ' +
+          '    /*'#49688#47161#51008#54665#47749'*/'
+        
+          '      ,NVL(B.RCVPT_BANK_CD, H.RCVPT_BANK_CD) AS RCVPT_BANK_CD   ' +
+          '    /*'#49688#47161#51008#54665#53076#46300'*/'
+        
+          '      ,NVL(B.RCVPT_ACNO,    H.RCVPT_ACNO)    AS RCVPT_ACNO      ' +
+          '    /*'#49688#47161#44228#51340#48264#54840'*/'
+        
+          '      ,NVL(B.RQEST_DIV_CD,  H.RQEST_DIV_CD)  AS RQEST_DIV_CD    ' +
+          '    /*'#52397#44396#44396#48516#53076#46300'*/'
+        
+          '      ,NVL(B.PYMT_DIV_CD,   H.PYMT_DIV_CD)   AS PYMT_DIV_CD     ' +
+          '    /*'#51648#44553#44396#48516#53076#46300'*/'
+        
+          '      ,B.ANNTY_DATE_PYMT_AMT                                    ' +
+          '    /*'#50672#44552#51068#49884#51648#44553#44552#50529'*/'
+        
+          '      ,B.ANNTY_STD_PRNA_AMT                                     ' +
+          '    /*'#50672#44552#44592#51456#50896#44552#44552#50529'*/'
+        
+          '      ,NVL(B.ANNTY_PYMT_CYCLE_CD, H.ANNTY_PYMT_CYCLE_CD) AS ANNT' +
+          'Y_PYMT_CYCLE_CD /*'#50672#44552#51648#44553#51452#44592#53076#46300'*/'
+        
+          '      ,NVL(B.ANNTY_CALC_MTH_CD,   H.ANNTY_PYMT_DIV_CD)   AS ANNT' +
+          'Y_CALC_MTH_CD   /*'#50672#44552#44228#49328#48169#48277#53076#46300'*/'
+        
+          '      ,NVL(B.ANNTY_PYMT_PERI,     H.ANNTY_PYMT_PERI)     AS ANNT' +
+          'Y_PYMT_PERI     /*'#50672#44552#51648#44553#44592#44036'*/'
+        
+          '      ,B.PYMT_SNO                                               ' +
+          '    /* '#51648#44553#51068#47144#48264#54840' */'
+        
+          '      ,D.INST_CL_CD                                             ' +
+          '    /*'#44592#44288#48516#47448#53076#46300'*/'
+        
+          '      ,NVL(D.INST_CD, H.INST_CD) AS INST_CD                     ' +
+          '    /*'#44592#44288#53076#46300'*/'
+        
+          '      ,G.CNTRCT_STAT_CD                                         ' +
+          '    /*'#44228#50557#49345#53468#53076#46300'*/'
+        
+          '      ,SUBSTR(NVL(B.RCEPT_YMD, TO_CHAR(SYSDATE, '#39'YYYYMMDD'#39')), 5,' +
+          '2) ||'#39#50900#39' ||SUBSTR(NVL(B.RCEPT_YMD, TO_CHAR(SYSDATE, '#39'YYYYMMDD'#39'))' +
+          ', 7,2) ||'#39#51068#39' AS MMDD                                            ' +
+          '                          /*'#47700#49464#51648#50857' '#50900'*/'
+        
+          '      ,B.TEL_ARNO||B.TEL_THNO||B.TEL_SNO AS HPNO                ' +
+          '    /*'#47700#49464#51648#50857#48264#54840'*/'
+        
+          '      ,C.EMAIL_ADDR                                             ' +
+          '    /*'#47700#49464#51648#50857#51060#47708'*/'
+        '      ,B.RCPPAY_ID    '
+        '      ,CASE WHEN B.PYMT_RCEPT_DIV_CD IS NOT NULL'
+        '            THEN B.PYMT_RCEPT_DIV_CD'
+        '            ELSE CASE WHEN H.CONFM_YN = '#39'1'#39
+        '                      THEN '#39'01'#39'   /* '#51648#44553#51217#49688#44396#48516#53076#46300':  01 '#54856#54168#51060#51648' */ '
+        '                      ELSE '#39#39
+        '                 END '
+        '       END  AS PYMT_RCEPT_DIV_CD  /* '#51648#44553#51217#49688#44396#48516#53076#46300' */  '
+        '      ,(SELECT CMMN_CL_NM '
+        '          FROM TBCO_COMMONCODE_I '
+        '         WHERE GROUP_CL = '#39'MT045'#39
+        
+          '           AND CMMN_CL  = CASE WHEN B.PYMT_RCEPT_DIV_CD IS NOT N' +
+          'ULL'
+        '                               THEN B.PYMT_RCEPT_DIV_CD'
+        '                               ELSE CASE WHEN H.CONFM_YN = '#39'1'#39
+        
+          '                                         THEN '#39'01'#39'   /* '#51648#44553#51217#49688#44396#48516#53076#46300 +
+          ':  01 '#54856#54168#51060#51648' */ '
+        '                                         ELSE '#39#39
+        '                                     END '
+        '                           END'
+        '       ) AS PYMT_RCEPT_DIV_NM /* '#51648#44553#51217#49688#44396#48516#47749' */ '
+        '   , (SELECT CMMN_CL_NM '
+        '        FROM TBCO_COMMONCODE_I '
+        '       WHERE GROUP_CL = '#39'MT034'#39
+        '         AND CMMN_CL  =  B.PYMT_DIV_CD   '
+        '      ) AS PYMT_DIV_NM                '
+        '   , B.ANNTY_DATE_INTR_AMT'
+        '   , B.ANNTY_DATE_INCTAX_AMT'
+        '   , B.ANNTY_DATE_INHBT_TAX_AMT'
+        '   , B.ANNTY_DATE_FIN_AMT'
+        '   , H.OFF_DISPOSAL_AGREE /* '#45812#48372#45824#50668' '#49345#44228#52376#47532#46041#51032' */'
+        
+          '   , '#39#52392#48512'('#39' || NVL(I.PRG_STAT_CD_NM, '#39#48120#52392#48512#39') || '#39')'#39' AS FILE_PRG_ST' +
+          'AT'
+        'FROM (SELECT * '
+        '      FROM TBMT_ACCMTNONPAID_M '
+        '     WHERE USE_YN = '#39'1'#39') A     /*'#48120#45225#44288#47532'*/'
+        '   ,TBMT_ACCMTPAYMENT_M    B     /*'#44553#50668#51648#44553#44288#47532'*/'
+        '   ,TBMT_MEMBER_M          C     /*'#54924#50896#44288#47532'*/'
+        '   ,TBMT_INSTMEMBER_M      D     /*'#44592#44288#54924#50896#44288#47532'*/'
+        '   ,TBMT_ACCMTSUCCESSION_M E     /*'#51201#47549#54805' '#44553#50668' '#49849#44816#44288#47532'*/'
+        '   ,TBMT_ACCMTREPAID_M     F     /*'#51201#47549#54805#44553#50668#51116#45225#51077#44288#47532'*/'
+        '   ,TBMT_ACCMTCONTRACT_M   G     /*'#51201#47549#54805#44553#50668#44228#50557#44288#47532'*/'
+        '   ,(SELECT B.*'
+        '          , D.INST_CD'
+        '          , D.INST_KOR_NM'
+        '       FROM TBMT_INDVCHGAPPLY_M     A'
+        '           ,TBMT_INDVPAYMENTAPPLY_M B'
+        '           ,TBMT_MEMBER_M           C'
+        '           ,TBMT_INSTMEMBER_M       D'
+        '      WHERE A.RQS_SNO  = B.RQS_SNO'
+        '        AND A.MBER_SNO = C.MBER_SNO(+)'
+        '        AND C.INST_CD  = D.INST_CD(+)'
+        '        AND B.CONFM_YN = '#39'1'#39
+        '        AND B.PYMT_DIV_CD NOT IN ('#39'4'#39')'
+        '        AND A.UPD_STAT_CD = '#39'A302'#39
+        '    ) H'
+        '   ,(SELECT MBER_SNO'
+        '          , SRB_EDYCNO'
+        '          , NPY_SNO'
+        '          , PRG_STAT_CD_NM'
+        '       FROM (SELECT MBER_SNO'
+        '                  , SRB_EDYCNO'
+        '                  , JOB_KEY AS NPY_SNO'
+        
+          '                  , (SELECT FN_GET_CODE_VALUE('#39'MT170'#39', PRG_STAT_' +
+          'CD,'#39'B'#39') FROM DUAL) AS PRG_STAT_CD_NM'
+        
+          '                  , ROW_NUMBER() OVER(PARTITION BY MBER_SNO, SRB' +
+          '_EDYCNO '
+        
+          '                                        ORDER BY DECODE(PRG_STAT' +
+          '_CD, '#39'0'#39', 1, '#39'1'#39', 3, '#39'2'#39', 2) ASC) AS NUM'
+        '               FROM TBMT_ACCMTJOBFILE_M)'
+        '      WHERE NUM = 1) I'
+        'WHERE A.SRB_EDYCNO = B.SRB_EDYCNO(+)'
+        'AND A.NPY_SNO    = B.NPY_SNO(+)'
+        'AND A.MBER_SNO   = C.MBER_SNO'
+        'AND A.NPY_INST_CD= D.INST_CD(+)'
+        'AND A.SRB_EDYCNO = E.SRB_EDYCNO(+)'
+        'AND A.NPY_SNO    = E.NPY_SNO(+)'
+        'AND A.SRB_EDYCNO = F.SRB_EDYCNO(+)'
+        'AND A.NPY_SNO    = F.NPY_SNO(+)'
+        'AND A.SRB_EDYCNO = G.SRB_EDYCNO'
+        'AND A.SRB_EDYCNO = H.SRB_EDYCNO(+)'
+        'AND A.MBER_SNO   = H.MBER_SNO(+)'
+        'AND A.SRB_EDYCNO    = I.SRB_EDYCNO(+)'
+        'AND A.MBER_SNO    = I.MBER_SNO(+)'
+        'AND A.NPY_SNO    = I.NPY_SNO(+)'
+        'AND A.NPY_DIV_CD IN ('#39'1'#39','#39'2'#39','#39'3'#39','#39'4'#39')   /*'#48120#45225#44396#48516#53076#46300'*/'
+        
+          'AND (B.CNCL_YMD IS NULL OR B.CNCL_YMD <> '#39'20161019'#39')  /*'#44608#49440#50725'-0018' +
+          '251 '#54924#50896' '#46412#47928#50640' '#52628#44032' 2600'#47564#50896'+40'#47564#50896#51060' '#48372#50668#51648#44256' 2700'#47564#51008' '#44553#50668#51648#44553#47785#47197#50640#49436' '#48372#50668#51648#47732' '#50504#46120'.*/'
+        'AND C.MBER_SNO = '#39'0077562'#39
+        'ORDER BY PYMT_YMD DESC')
+      Advanced = True
+    end
+    item
+      Name = '2_accmt_mber_stat_cd'
+      Description = #54924#50896#49345#53468#54869#51064
+      Code.Strings = (
+        'SELECT MEM.MBER_SNO'
+        '     , MEM.MBER_NM'
+        '     , MEM.INST_CD'
+        '     , MEM.ACCMT_MBER_STAT_CD'
+        '     , (SELECT CMMN_CL || '#39':'#39' || CMMN_CL_NM'
+        '          FROM TBCO_COMMONCODE_I'
+        '         WHERE GROUP_CL = '#39'MT015'#39
+        
+          '           AND CMMN_CL = MEM.ACCMT_MBER_STAT_CD) AS ACCMT_MBER_S' +
+          'TAT_CD_NM'
+        '     , MEM.CNTRCT_DIV_CD'
+        '     , (SELECT CMMN_CL || '#39':'#39' || CMMN_CL_NM'
+        '          FROM TBCO_COMMONCODE_I'
+        '         WHERE GROUP_CL = '#39'MT016'#39
+        '           AND CMMN_CL = MEM.CNTRCT_DIV_CD) AS CNTRCT_DIV_CD_NM'
+        '     , CON.SRB_EDYCNO '
+        '     , CON.CNTRCT_STAT_CD'
+        '     , (SELECT CMMN_CL || '#39':'#39' || CMMN_CL_NM'
+        '          FROM TBCO_COMMONCODE_I'
+        '         WHERE GROUP_CL = '#39'MT031'#39
+        
+          '           AND CMMN_CL = CON.CNTRCT_STAT_CD) AS CNTRCT_STAT_CD_N' +
+          'M'
+        '     , (SELECT CC.ACCMT_MBER_STAT_CD'
+        '          FROM TBMT_MEMBER_H  CC'
+        '         WHERE CC.MBER_SNO = CON.MBER_SNO'
+        '           AND PRG_DATE    = (SELECT MAX(DD.PRG_DATE)'
+        '                                FROM TBMT_MEMBER_H DD'
+        '                               WHERE DD.MBER_SNO  = CON.MBER_SNO'
+        
+          '                                 AND DD.PRG_DATE <= CON.UPD_DATE' +
+          ')) AS OLD_ACCMT_MBER_STAT_CD'
+        '  FROM TBMT_MEMBER_M MEM'
+        '     , TBMT_ACCMTCONTRACT_M CON'
+        ' WHERE MEM.MBER_SNO = CON.MBER_SNO'
+        '   AND CON.SRB_EDYCNO = (SELECT MAX(S.SRB_EDYCNO)'
+        '                           FROM TBMT_ACCMTCONTRACT_M S'
+        '                          WHERE S.MBER_SNO = MEM.MBER_SNO)'
+        
+          '   AND MEM.ACCMT_MBER_STAT_CD IN ('#39'1'#39', '#39'11'#39', '#39'5'#39', '#39'99'#39') -- 1:'#44032#51077',' +
+          ' 11:'#45225#51077#51648#50672', 5:'#55092#51649', 99:'#44592#53440
+        
+          '   AND CON.CNTRCT_STAT_CD NOT IN ('#39'1'#39', '#39'2'#39', '#39'8'#39')    -- 1:'#44032#51077#51473', 2:' +
+          #44032#51077#50836#52397', 8:'#50672#44552#51648#44553
+        '--   AND MEM.MBER_SNO = '#39'0065858'#39)
+      Advanced = True
+    end>
+  SubAnalyzers = <
+    item
+      DisplayName = 'Java'
+      StartExpression = 
+        '(?i)(\bJAVA\b)(\s*?)(\bSOURCE\b)(\s*?)(\bNAMED\b)(s*?)(.+?)(\b(A' +
+        'S|IS)\b)'
+      EndExpression = '(?-m)(\})(\s*?)(;?\s*?)((\/\s*?(\r|\n|$))|(\s*?$))'
+      SyntAnalyzer = SyntAnal5.Owner
+    end>
+  SampleText.Strings = (
+    '/* This calculates a nextdate for a defined interval.'
+    
+      '   The function works similar to the functionality in DBMS_JOB *' +
+      '/'
+    ''
+    'FUNCTION calc_next_date ('
+    '   i_interval   IN   VARCHAR2,'
+    '   i_default    IN   DATE DEFAULT SYSDATE'
+    ')'
+    '   RETURN DATE'
+    'IS'
+    '   v_date        DATE;'
+    '   v_statement   VARCHAR2 (5000);'
+    'BEGIN'
+    '   IF i_interval IS NULL'
+    '   THEN'
+    
+      '      RETURN (i_default);  -- if no interval defined return the ' +
+      'default value'
+    '   ELSE'
+    '      v_statement := '#39'SELECT '#39' || i_interval || '#39' FROM DUAL'#39';'
+    ''
+    '      EXECUTE IMMEDIATE v_statement'
+    '                   INTO v_date;'
+    ''
+    '      RETURN (v_date);'
+    '   END IF;'
+    'EXCEPTION'
+    '   WHEN OTHERS'
+    '   THEN'
+    '      -- if any error occurs, return the default value'
+    '      RETURN (i_default);'
+    'END calc_next_date;')
+  TokenTypeNames.Strings = (
+    'Unknown'
+    'Comment'
+    'Identifier'
+    'Symbol'
+    'String'
+    'Integer const'
+    'Float const')
+  MarkedBlockStyle = 'Marked block'
+  CurrentLineStyle = 'Current Line'
+  DefaultStyleName = 'Default'
+  Extentions = 'SQL FNC JAVA JVS PKB PKS PRC TPB TPS TRG VW PLS'
+  LexerName = 'PL/SQL'
+  RestartFromLineStart = True
+  LineComment = '--'
+  Charset = DEFAULT_CHARSET
+  Left = 308
+  Top = 412
+end
