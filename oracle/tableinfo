@@ -1,0 +1,453 @@
+DECLARE
+
+/**************************************************
+ Object Name: DO_NOT_TOUCH 
+ Description : 손대지 마세요.
+       P_TABLE_NM : 테이블이름
+       P_PRE_DIV  : 앞구분자
+       P_NEXT_DIV : 뒷구분자
+       P_MOD : 1.'' <- 티폼용
+           2.INSERT 쿼리 생성
+        3.UPDATE 쿼리 생성
+        4.DELETE 쿼리 생성
+        5.SELECT 쿼리 생성
+        6.MERGE  쿼리 생성
+ Date :   
+ Username:  이봉규  
+ Table Name:       
+ 
+ EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('d') ;
+        WHEN TOO_MANY_ROWS THEN
+            DBMS_OUTPUT.PUT_LINE(v_LND_SNO) ;
+**************************************************/
+
+P_OWNER         VARCHAR2(10);
+P_TABLE_NM      VARCHAR2(50);
+
+P_PRE_DIV       VARCHAR2(100);
+P_NEXT_DIV      VARCHAR2(100);
+P_COMMENT_YN    VARCHAR2(100);
+P_CAMEL_YN      VARCHAR2(100);
+P_MOD           VARCHAR2(100);
+P_MOD_CMT       VARCHAR2(100);
+
+V_TABLE_COMMENTS  VARCHAR2(200);
+  
+BEGIN
+  
+  P_OWNER       := 'SEMA_OWN';
+--  P_OWNER       := 'SEMA_CMS';
+  P_TABLE_NM    := TRIM('TBMT_ACCMTPAYMENT_M_DAMO');
+  P_TABLE_NM    := TRIM('tbmt_member_m_damo');
+--  P_TABLE_NM    := TRIM('_DAMO');
+--  P_TABLE_NM    := 'TBCO_COMMONCODE_I';
+  P_PRE_DIV     := 'A.';
+  P_NEXT_DIV    := '';
+  P_COMMENT_YN  := 'Y';
+--  P_CAMEL_YN    := 'Y';
+  P_MOD         := 'SELECT';
+--  P_MOD         := 'dataset';
+--  P_MOD         := 'SELECT_HAN';
+--  P_MOD         := 'DESC';
+--  P_MOD         := 'JOIN'; 
+  
+  
+  IF UPPER(P_MOD) = 'D' OR UPPER(P_MOD) = 'DATASET' THEN
+    DBMS_OUTPUT.PUT_LINE ('<ColumnInfo>');
+    
+    FOR C_COL IN (SELECT  TABLE_NAME
+                        , COLUMN_NAME AS COL_NM
+                    FROM ALL_TAB_COLUMNS
+                   WHERE OWNER = P_OWNER
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)
+       ORDER BY COLUMN_ID ASC) LOOP
+         
+    DBMS_OUTPUT.PUT_LINE ('<Column id="' || C_COL.COL_NM || '" type="STRING" size="256"/>');
+    END LOOP;
+    
+    DBMS_OUTPUT.PUT_LINE ('</ColumnInfo>');
+  
+  ELSIF P_MOD IS NULL THEN
+  
+   FOR C_COL IN (SELECT   TABLE_NAME
+                        , P_PRE_DIV || COLUMN_NAME || P_NEXT_DIV AS COL_NM
+                    FROM ALL_TAB_COLUMNS
+                   WHERE OWNER = P_OWNER
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)
+       ORDER BY COLUMN_ID ASC) LOOP
+         
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+   
+  ELSIF P_MOD = 'JOIN' THEN
+  
+   FOR C_COL IN (SELECT A.TABLE_NAME
+                      , (CASE WHEN ROWNUM >1 THEN 'AND 'ELSE ' ON ' END) 
+                         ||'A.'
+                         ||A.COLUMN_NAME
+                         ||' = '
+                         ||'B.'
+                         ||A.COLUMN_NAME 
+                            AS COL_NM
+                    FROM ALL_INDEXES M
+                         INNER JOIN ALL_IND_COLUMNS A ON M.OWNER = A.INDEX_OWNER
+                                                      AND M.INDEX_NAME = A.INDEX_NAME
+                   WHERE M.UNIQUENESS = 'UNIQUE'
+                     AND A.INDEX_OWNER = P_OWNER
+                     AND A.TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+                                    
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+   
+  ELSIF UPPER(P_MOD) = 'INSERT' THEN
+  
+  DBMS_OUTPUT.PUT_LINE ('INSERT INTO '||UPPER(P_TABLE_NM)||'(');
+    
+   FOR C_COL IN (SELECT   TABLE_NAME
+                        , (CASE WHEN TO_NUMBER(COLUMN_ID) > 1 THEN ',' END)
+          || COLUMN_NAME AS COL_NM
+                    FROM ALL_TAB_COLUMNS
+                   WHERE OWNER = P_OWNER
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)
+       ORDER BY TO_NUMBER(COLUMN_ID) ASC) LOOP
+         
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+   
+  --DBMS_OUTPUT.PUT_LINE (')'||CHR(13)||'VALUES(');
+  DBMS_OUTPUT.PUT_LINE (')VALUES(');
+  
+   FOR C_COL IN (SELECT   TABLE_NAME
+                        , (CASE WHEN TO_NUMBER(COLUMN_ID) > 1 THEN P_PRE_DIV ELSE P_NEXT_DIV END)
+          || COLUMN_NAME 
+          || P_NEXT_DIV AS COL_NM
+                    FROM ALL_TAB_COLUMNS
+                   WHERE OWNER = P_OWNER
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)
+       ORDER BY TO_NUMBER(COLUMN_ID) ASC) LOOP
+         
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+   
+  DBMS_OUTPUT.PUT_LINE (')');
+  
+  ELSIF UPPER(P_MOD) = 'UPDATE' THEN
+
+  DBMS_OUTPUT.PUT_LINE ('UPDATE ' || UPPER(P_TABLE_NM));
+   FOR C_COL IN (SELECT   A.TABLE_NAME
+            ,(CASE WHEN A.COLUMN_ID - (SELECT COUNT(*) 
+                         FROM ALL_IND_COLUMNS
+                WHERE INDEX_OWNER = P_OWNER 
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)) > 1 
+            THEN ',' 
+          ELSE 'SET ' 
+        END)
+         ||A.COLUMN_NAME 
+         ||' = '
+         ||P_NEXT_DIV
+         ||A.COLUMN_NAME
+         ||P_NEXT_DIV AS COL_NM
+        FROM ALL_TAB_COLUMNS A
+          INNER JOIN (SELECT COLUMN_NAME 
+               FROM (SELECT COLUMN_NAME 
+                 FROM ALL_TAB_COLUMNS 
+             WHERE OWNER = P_OWNER
+               AND TABLE_NAME = UPPER(P_TABLE_NM)
+               MINUS
+               SELECT COLUMN_NAME
+                 FROM ALL_IND_COLUMNS 
+             WHERE INDEX_OWNER = P_OWNER 
+               AND TABLE_NAME = UPPER(P_TABLE_NM))) B ON A.COLUMN_NAME = B.COLUMN_NAME
+                   WHERE A.OWNER = P_OWNER
+                     AND A.TABLE_NAME = UPPER(P_TABLE_NM)
+         ORDER BY A.COLUMN_ID ASC) LOOP
+
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   
+   END LOOP;
+
+   FOR C_COL IN (SELECT   TABLE_NAME
+            ,(CASE WHEN ROWNUM >1 THEN 'AND ' ELSE 'WHERE ' END)
+           ||COLUMN_NAME 
+        ||' = '
+        ||P_PRE_DIV
+        ||COLUMN_NAME
+        ||P_NEXT_DIV AS COL_NM
+        FROM ALL_IND_COLUMNS
+                   WHERE INDEX_OWNER = P_OWNER
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)
+       ORDER BY COLUMN_POSITION ASC) LOOP
+         
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+
+  ELSIF UPPER(P_MOD) = 'DELETE' THEN
+  
+   DBMS_OUTPUT.PUT_LINE ('DELETE FROM ' || UPPER(P_TABLE_NM));  
+   FOR C_COL IN (SELECT   TABLE_NAME
+                        ,(CASE WHEN ROWNUM >1 THEN 'AND 'ELSE ' WHERE ' END) 
+         ||COLUMN_NAME
+         ||' = '
+         ||P_PRE_DIV
+         ||COLUMN_NAME 
+         ||P_NEXT_DIV AS COL_NM
+                    FROM ALL_IND_COLUMNS
+                   WHERE INDEX_OWNER = P_OWNER
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+          
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+
+  ELSIF UPPER(P_MOD) = 'SELECT' THEN
+  
+   DBMS_OUTPUT.PUT_LINE ('SELECT');  
+   FOR C_COL IN (SELECT   /*+  */A.TABLE_NAME
+                        ,(CASE WHEN ROWNUM >1 THEN ','ELSE '' END) 
+                         ||P_PRE_DIV
+                         ||A.COLUMN_NAME 
+                         ||P_NEXT_DIV
+--                         || CASE WHEN P_COMMENT_YN = 'Y' THEN ' -- ' || B.COMMENTS ELSE '' END
+                         || CASE WHEN P_COMMENT_YN = 'Y' THEN ' /* ' || B.COMMENTS || ' */' ELSE '' END
+                         || CASE WHEN P_CAMEL_YN = 'Y' THEN ' -- ' || REPLACE(REPLACE(INITCAP('Camel'||A.COLUMN_NAME),'Camel', ''), '_','') ELSE '' END
+--                         || ' -- ' || B.COMMENTS 
+--                         || '/* ' || B.COMMENTS || ' */'
+                         AS COL_NM
+                    FROM ALL_TAB_COLUMNS A
+                         LEFT OUTER JOIN ALL_COL_COMMENTS B ON B.OWNER = A.OWNER
+                                                            AND B.TABLE_NAME = A.TABLE_NAME
+                                                            AND B.COLUMN_NAME = A.COLUMN_NAME
+                   WHERE A.OWNER = P_OWNER
+         AND A.TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+          
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+   
+   -- TABLE 
+   SELECT COMMENTS
+     INTO V_TABLE_COMMENTS
+     FROM ALL_TAB_COMMENTS
+    WHERE OWNER = P_OWNER
+      AND TABLE_NAME = UPPER(P_TABLE_NM);
+      
+   DBMS_OUTPUT.PUT_LINE ('FROM ' || UPPER(P_TABLE_NM) || ' ' || REPLACE(P_PRE_DIV, '.') || '    /* ' || V_TABLE_COMMENTS || ' */');
+  
+  FOR C_COL IN (SELECT   A.TABLE_NAME
+                        ,(CASE WHEN ROWNUM >1 THEN 'AND 'ELSE ' WHERE ' END) 
+         ||A.COLUMN_NAME
+         ||' = '
+         ||'#'
+         ||A.COLUMN_NAME 
+         ||'#' AS COL_NM
+                    FROM ALL_INDEXES M
+                         INNER JOIN ALL_IND_COLUMNS A ON M.OWNER = A.INDEX_OWNER
+                                                      AND M.INDEX_NAME = A.INDEX_NAME
+                   WHERE M.UNIQUENESS = 'UNIQUE'
+                     AND A.INDEX_OWNER = P_OWNER
+                     AND A.TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+                                    
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+  
+  ELSIF UPPER(P_MOD) = 'SELECT_HAN' THEN
+  
+   DBMS_OUTPUT.PUT_LINE ('SELECT');  
+   FOR C_COL IN (SELECT   /*+  */A.TABLE_NAME
+                        ,(CASE WHEN ROWNUM >1 THEN ','ELSE '' END) 
+                         ||P_PRE_DIV
+                         ||A.COLUMN_NAME 
+                         ||P_NEXT_DIV
+                         || ' AS "' || B.COMMENTS || '" '
+                         AS COL_NM
+                    FROM ALL_TAB_COLUMNS A
+                         LEFT OUTER JOIN ALL_COL_COMMENTS B ON B.OWNER = A.OWNER
+                                                            AND B.TABLE_NAME = A.TABLE_NAME
+                                                            AND B.COLUMN_NAME = A.COLUMN_NAME
+                   WHERE A.OWNER = P_OWNER
+         AND A.TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+          
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+   
+   -- TABLE 
+   SELECT COMMENTS
+     INTO V_TABLE_COMMENTS
+     FROM ALL_TAB_COMMENTS
+    WHERE OWNER = P_OWNER
+      AND TABLE_NAME = UPPER(P_TABLE_NM);
+
+   DBMS_OUTPUT.PUT_LINE ('FROM ' || UPPER(P_TABLE_NM) || ' ' || REPLACE(P_PRE_DIV, '.') || '    /* ' || V_TABLE_COMMENTS || ' */');
+  
+  FOR C_COL IN (SELECT   A.TABLE_NAME
+                        ,(CASE WHEN ROWNUM >1 THEN 'AND 'ELSE ' WHERE ' END) 
+         ||P_PRE_DIV
+         ||A.COLUMN_NAME
+         ||' = '
+         ||'#'
+         ||A.COLUMN_NAME 
+         ||'#' AS COL_NM
+                    FROM ALL_INDEXES M
+                         INNER JOIN ALL_IND_COLUMNS A ON M.OWNER = A.INDEX_OWNER
+                                                      AND M.INDEX_NAME = A.INDEX_NAME
+                   WHERE M.UNIQUENESS = 'UNIQUE'
+                     AND A.INDEX_OWNER = P_OWNER
+                     AND A.TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+                                    
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   END LOOP;
+  
+  ELSIF UPPER(P_MOD) = 'DESC' THEN
+    FOR C_COL IN (SELECT COL.COLUMN_NAME
+                       , COL.COLUMN_ID
+                       , NVL2(IDX_COL.COLUMN_NAME, '1', '') AS PK
+                       , IDX_COL.COLUMN_POSITION AS IDX_POS
+                       , COL.NULLABLE
+                       , COL.DATA_TYPE
+                       , COL.DATA_DEFAULT
+                       , COL.DATA_LENGTH
+                       , CMT.COMMENTS
+                       , COL.COLUMN_NAME
+                           || ' '
+                           || CASE 
+                                WHEN COL.DATA_TYPE = 'VARCHAR2'
+                                    THEN COL.DATA_TYPE || '(' || COL.DATA_LENGTH || ')' 
+                                ELSE COL.DATA_TYPE
+                              END
+                           || ' '
+                           || DECODE(COL.NULLABLE, 'N', 'NOT NULL', '')
+                           || '    -- ' 
+                           || CMT.COMMENTS
+                           AS DESC_COL
+                    FROM ALL_TAB_COLUMNS COL
+                         INNER JOIN ALL_COL_COMMENTS CMT ON CMT.OWNER = COL.OWNER
+                                                         AND CMT.TABLE_NAME = COL.TABLE_NAME
+                                                         AND CMT.COLUMN_NAME = COL.COLUMN_NAME
+                         LEFT OUTER JOIN (SELECT IDX.OWNER
+                                               , IDX.TABLE_NAME
+                                               , IDX_COL.COLUMN_NAME
+                                               , IDX_COL.COLUMN_POSITION
+                                            FROM ALL_INDEXES IDX
+                                                 INNER JOIN ALL_IND_COLUMNS IDX_COL ON IDX_COL.INDEX_OWNER = IDX.OWNER
+                                                                                    AND IDX_COL.TABLE_NAME = IDX.TABLE_NAME
+                                                                                    AND IDX_COL.INDEX_NAME = IDX.INDEX_NAME
+                                           WHERE IDX.UNIQUENESS = 'UNIQUE') IDX_COL ON IDX_COL.OWNER = COL.OWNER
+                                                                                    AND IDX_COL.TABLE_NAME = COL.TABLE_NAME
+                                                                                    AND IDX_COL.COLUMN_NAME = COL.COLUMN_NAME
+                    --       LEFT OUTER JOIN ALL_IND_COLUMNS IDX_COL ON IDX_COL.INDEX_OWNER = COL.OWNER
+                    --                                              AND IDX_COL.TABLE_NAME = COL.TABLE_NAME
+                    --                                              AND IDX_COL.COLUMN_NAME = COL.COLUMN_NAME
+                    --       LEFT OUTER JOIN ALL_INDEXES IDX ON IDX.OWNER = IDX_COL.INDEX_OWNER
+                    --                                      AND IDX.TABLE_NAME = IDX_COL.TABLE_NAME
+                    --                                      AND IDX.INDEX_NAME = IDX_COL.INDEX_NAME
+                    --                                      AND IDX.UNIQUENESS = 'UNIQUE'
+                   WHERE COL.OWNER = P_OWNER
+                     AND COL.TABLE_NAME = UPPER(P_TABLE_NM)
+                   ORDER BY COL.COLUMN_ID ASC) LOOP
+                                    
+    DBMS_OUTPUT.PUT_LINE (C_COL.DESC_COL);
+   END LOOP;
+   
+  ELSIF UPPER(P_MOD) = 'MERGE' THEN
+   DBMS_OUTPUT.PUT_LINE ('MERGE INTO '|| UPPER(P_TABLE_NM) || ' A');
+  DBMS_OUTPUT.PUT_LINE ('USING DUAL B');
+  DBMS_OUTPUT.PUT_LINE ('ON ( ');
+    
+    FOR C_COL IN (SELECT  COLUMN_NAME AS COL_NM
+             ,COLUMN_POSITION
+       FROM  ALL_IND_COLUMNS
+         WHERE  TABLE_OWNER = P_OWNER 
+           AND  TABLE_NAME = UPPER(P_TABLE_NM)) LOOP
+   
+    IF C_COL.COLUMN_POSITION > 1 THEN
+       DBMS_OUTPUT.PUT_LINE('AND A.' || C_COL.COL_NM || ' = ' || P_NEXT_DIV || C_COL.COL_NM || P_NEXT_DIV);
+    ELSIF C_COL.COLUMN_POSITION = 1 THEN
+       DBMS_OUTPUT.PUT_LINE('A.' || C_COL.COL_NM || ' = ' || P_NEXT_DIV || C_COL.COL_NM || P_NEXT_DIV);
+    END IF;
+  
+   END LOOP;
+  
+  DBMS_OUTPUT.PUT_LINE (')');
+  
+  --MERGE UPDATE
+  DBMS_OUTPUT.PUT_LINE ('WHEN MATCHED THEN');
+  DBMS_OUTPUT.PUT_LINE ('UPDATE');
+   
+   FOR C_COL IN (SELECT   
+              A.TABLE_NAME
+           ,(CASE WHEN A.COLUMN_ID - (SELECT COUNT(*) 
+                         FROM ALL_IND_COLUMNS
+                WHERE INDEX_OWNER = P_OWNER 
+                     AND TABLE_NAME = UPPER(P_TABLE_NM)) > 1 
+            THEN ',' 
+          ELSE 'SET ' 
+          END)
+             ||A.COLUMN_NAME 
+             || ' = '
+             ||P_NEXT_DIV
+             ||A.COLUMN_NAME
+             ||P_NEXT_DIV AS COL_NM
+        FROM ALL_TAB_COLUMNS A
+          INNER JOIN (SELECT COLUMN_NAME 
+               FROM (SELECT COLUMN_NAME 
+                 FROM ALL_TAB_COLUMNS 
+             WHERE OWNER = P_OWNER
+               AND TABLE_NAME = UPPER(P_TABLE_NM)
+               AND NOT EXISTS (SELECT * 
+                           FROM ALL_IND_COLUMNS 
+                    WHERE ALL_TAB_COLUMNS.COLUMN_NAME = ALL_IND_COLUMNS.COLUMN_NAME
+                      AND ALL_TAB_COLUMNS.OWNER = ALL_IND_COLUMNS.INDEX_OWNER
+                   AND ALL_TAB_COLUMNS.TABLE_NAME = ALL_IND_COLUMNS.TABLE_NAME))
+           ) B ON A.COLUMN_NAME = B.COLUMN_NAME
+                   WHERE A.OWNER = P_OWNER
+                     AND A.TABLE_NAME = UPPER(P_TABLE_NM)
+         ORDER BY A.COLUMN_ID ASC) LOOP
+
+    DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+   
+   END LOOP;
+
+  --MERGE INSERT
+  DBMS_OUTPUT.PUT_LINE ('WHEN NOT MATCHED THEN');
+  
+   DBMS_OUTPUT.PUT_LINE ('INSERT (');
+    
+    FOR C_COL IN (SELECT   TABLE_NAME
+                         , (CASE WHEN ROWNUM > 1 THEN ',' END) 
+           || COLUMN_NAME AS COL_NM
+                     FROM ALL_TAB_COLUMNS
+                    WHERE OWNER = P_OWNER
+                      AND TABLE_NAME = UPPER(P_TABLE_NM)
+          /*AND NOT EXISTS (SELECT * 
+                      FROM ALL_IND_COLUMNS 
+               WHERE ALL_TAB_COLUMNS.COLUMN_NAME = ALL_IND_COLUMNS.COLUMN_NAME
+              AND ALL_TAB_COLUMNS.OWNER = ALL_IND_COLUMNS.INDEX_OWNER
+              AND ALL_TAB_COLUMNS.TABLE_NAME = ALL_IND_COLUMNS.TABLE_NAME)*/) LOOP
+          
+     DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+    END LOOP;
+    
+   --DBMS_OUTPUT.PUT_LINE (')'||CHR(13)||'VALUES(');
+   DBMS_OUTPUT.PUT_LINE (')VALUES(');
+   
+    FOR C_COL IN (SELECT   TABLE_NAME
+                         , (CASE WHEN ROWNUM > 1 THEN P_PRE_DIV ELSE P_NEXT_DIV END) 
+           || COLUMN_NAME 
+           || P_NEXT_DIV AS COL_NM
+                     FROM ALL_TAB_COLUMNS
+                    WHERE OWNER = P_OWNER
+                      AND TABLE_NAME = UPPER(P_TABLE_NM)
+          /*AND NOT EXISTS (SELECT * 
+                      FROM ALL_IND_COLUMNS 
+               WHERE ALL_TAB_COLUMNS.COLUMN_NAME = ALL_IND_COLUMNS.COLUMN_NAME
+              AND ALL_TAB_COLUMNS.OWNER = ALL_IND_COLUMNS.INDEX_OWNER
+              AND ALL_TAB_COLUMNS.TABLE_NAME = ALL_IND_COLUMNS.TABLE_NAME)*/) LOOP
+          
+     DBMS_OUTPUT.PUT_LINE (C_COL.COL_NM);
+    END LOOP;
+   
+  DBMS_OUTPUT.PUT_LINE (');');
+          
+  END IF;
+  
+END;
